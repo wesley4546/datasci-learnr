@@ -1,1 +1,1 @@
-# teach-r-temp
+# teachr

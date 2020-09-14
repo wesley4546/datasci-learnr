@@ -1,0 +1,554 @@
+---
+title: "Wrangle yo' data"
+output: 
+  learnr::tutorial:
+    progressive: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(dplyr)
+knitr::opts_chunk$set(echo = FALSE)
+
+bfi_scored <- psych::scoreVeryFast(keys = psych::bfi.keys,
+                                   items = psych::bfi,
+                                   min = 1,
+                                   max = 6) %>%
+  as.data.frame() %>%
+  tibble::rownames_to_column(var = ".id")
+
+bfi_data <- psych::bfi %>%
+  tibble::rownames_to_column(var = ".id") %>%
+  select(.id, gender, education, age) %>%
+  mutate(.id = as.character(.id),
+         gender = factor(recode(gender, "1" = "male", "2" = "female"))) %>%
+  left_join(bfi_scored, by = ".id")
+
+rm(bfi_scored)
+```
+
+## Getting Started
+
+Today we'll get started with learning to "wrangle" data---that is, to subset it, rearrange it, transform it, summarize it, and otherwise make it ready for analysis. We are going to be working with the `dplyr` package. Specifically, we're going to consider three lessons today:
+
+-   Intro to `dplyr` syntax
+-   The `%>%` pipe and the `dplyr` advantage
+-   `filter`; relational/comparison and logical operators in R
+
+Specific `dplyr` functions we will cover
+
+-   `select()`
+-   `arrange()`
+-   `filter()`
+-   `mutate()`
+-   `summarize()`
+-   `group_by()`
+-   `grouped mutate()`
+
+### Resources
+
+STAT 545 chapters: - [stat545: dplyr-intro](https://stat545.com/dplyr-intro.html) - [stat545: dplyr-single](https://stat545.com/dplyr-single.html)
+
+More detail can be found in the [r4ds: transform chapter](https://r4ds.had.co.nz/transform.html).
+
+Here are some supplementary resources:
+
+-   A similar resource to the r4ds one above is the [intro to dplyr vignette](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html).
+-   Want to read more about piping? See [r4ds: pipes](http://r4ds.had.co.nz/pipes.html).
+
+Some advanced topics you might find useful: - For window functions and how dplyr handles them, see the [window-functions](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html) vignette for the `dplyr` package. - For time series data, see the [tsibble demo](https://tsibble.tidyverts.org/)
+
+## Intro to `dplyr` syntax
+
+### Learning Objectives
+
+Here are the concepts we'll be exploring in this lesson:
+
+-   tidyverse
+
+-   dplyr functions:
+
+    -   `select()`
+    -   `arrange()`
+
+-   piping
+
+By the end of this lesson, students are expected to be able to:
+
+-   subset and rearrange data with dplyr
+-   use piping (`%>%`) when implementing function chains
+
+### Compare base `R` to `dplyr`
+
+**Self-documenting code**
+
+This is where the tidyverse shines.
+
+Example of `dplyr` vs base `R`:
+
+    gapminder[gapminder$country == "Cambodia", c("year", "lifeExp")]
+
+vs.
+
+    gapminder %>%
+      filter(country == "Cambodia") %>%
+      select(year, lifeExp)
+
+This: `%>%` is called a pipe. You can think of it as like saying the word "then" when reading the code. What it does is take whatever is passed on the left side (before) of the pipe and put it as the first argument to whatever is passed on the right side (after).
+
+Here is an example of the logic of using a pipe:
+
+Check out my morning routine!
+
+    leave_house(get_dressed(get_out_of_bed(wake_up(me, time = "8:00"), side = "correct"), pants = TRUE, shirt = TRUE), car = TRUE, bike = FALSE)
+
+vs.
+
+    me %>% 
+      wake_up(time = "8:00") %>% 
+      get_out_of_bed(side = "correct") %>% 
+      get_dressed(pants = TRUE, shirt = TRUE) %>% 
+      leave_house(car = TRUE, bike = FALSE)
+
+See how using the `%>%` can make the code more intuitive and read-able?
+
+### Exercise 1
+
+Using `mtcars` print the `head()` using `%>%`.
+
+```{r piping-logic, exercise=TRUE}
+
+```
+
+```{r piping-logic-solution}
+mtcars %>% 
+  head()
+```
+
+
+*HINT: You can use `ctrl`+`shift`+`m` (or `cmd`+`shift`+`m`) as a shortcut for the `%>%` in R Studio (not in these code chunks :-( )*
+
+### Advanced piping `%>%`
+
+Now, what if you use a function on the right side (after) the `%>%` and the first argument of THAT function isn't for my data?
+
+We can use a period `.` as a placeholder for whatever is being passed on the left side.
+
+For example, if I want to pipe `%>%` `mtcars` into the `lm()` function I can use `data = .` to do that. 
+
+```
+    mtcars %>% 
+      lm(mpg ~ hp, data = .)
+```
+### The workflow
+
+1.  Wrangle your data with `dplyr` first
+2.  Pipe `%>%` your data into a plot/analysis
+
+### Basic principles:
+
+When it comes to coding, here are some helpful steps:
+
+1.  Do one thing at a time
+
+    -   Transform variables OR select variables OR filter cases
+
+2.  Chain multiple operations together using the pipe `%>%`
+
+3.  Use readable object and variable names
+
+4.  Subset a dataset (i.e., select variables) by **name**, not by "magic numbers"
+
+5.  Note that you need to use the assignment operator `<-` to store changes!
+
+## `select()`
+
+### Using the `?` to find help
+
+Now that you've mastered the logic of the `%>%` we are going to look at the `select()` function.
+
+We can look up the documentation of code by putting a `?` before the function. Click run code to pull up the help page:
+
+```{r select-help, exercise=TRUE}
+?select
+```
+
+### `select()`ing some BFI Data
+
+Say for example that I am working with the Big-Five Inventory (`bfi_data`) data shown below:
+
+```{r example-bfi-1, exercise=FALSE, echo=TRUE}
+head(bfi_data)
+```
+
+and I want to subset my data to only include the `.id`,`gender`, and `neuroticism` columns.
+
+Here is an example of what I would do:
+
+```{r example-bfi-2, exercise=FALSE, echo=TRUE}
+gender_neuro <-
+  bfi_data %>% 
+  select(.id, gender, neuroticism)
+
+gender_neuro
+```
+
+### Exercise 2
+
+Now you try!
+
+From the `bfi_data` data frame, select `.id`,`gender`, and `extraversion` and name it `gender_extra`
+
+```{r select-1, exercise=TRUE, exercise.eval = TRUE}
+
+```
+
+```{r select-1-solution}
+gender_extra <-
+  bfi_data %>% 
+  select(.id, gender, extraversion)
+
+gender_extra
+```
+
+### Removing columns with `select()`
+
+Woah, woah, woah, wait a minute. I just realized that some of the rows for `education` is `NA`. I want to remove that column but keep everything else. To do that, I put a "`-`" infront of my "`column_name`".
+
+```{r select-2, exercise=FALSE, echo=TRUE}
+non_edu_bfi_data <-
+  bfi_data %>% 
+  select(-education)
+
+non_edu_bfi_data
+```
+
+### Check your understanding: `select()`
+
+```{r cyu-select}
+quiz(
+  question("What do I put infront of my column name to remove it using `select()`?",
+    answer("`+`"),
+    answer("`remove()`"),
+    answer("`-`", correct = TRUE),
+    answer("`!=`"),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+## `arrange()`
+
+Great job on `select()`ing data!
+
+When looking at data sometimes we might want our data in a certain order. This is where `arrange()` comes in!
+
+Looking at the `bfi_data` again, say I wanted to order my data in the descending order based off of the `age` column.
+
+```{r example-arrange-1, exercise=FALSE, echo=TRUE}
+desc_bfi <-
+  bfi_data %>% 
+  arrange(desc(age))
+
+desc_bfi
+```
+
+### Exercise 3
+
+You try!
+
+`arrange()` our `bfi_data` to the descending order of the `.id` column and call it `desc_bfi`.
+
+```{r exercise-3, exercise=TRUE}
+```
+
+```{r exercise-3-solution}
+desc_bfi <-
+  bfi_data %>% 
+  arrange(desc(.id))
+
+desc_bfi
+```
+
+## Logical Operators in `R`
+
+Here are the concepts we'll be exploring in this lesson:
+
+-   Relational/comparison operators
+-   Logical operators
+-   dplyr functions:
+    -   `filter()`
+    -   `mutate()`
+    -   `summarize()`
+    -   `group_by()`
+
+By the end of this lesson, you will be able to:
+
+-   Predict the output of R code containing the above operators.
+-   Explain the difference between &/&& and \|/\|\|, and name a situation where one should be used over the other.
+-   Subsetting and transforming data using `filter()` and `mutate()`
+
+
+### A list of operations
+
+
+**Arithmetic** operators allow us to carry out mathematical operations:
+
+| Operator | Description                               |
+|:--------:|-------------------------------------------|
+|     +    | Add                                       |
+|     -    | Subtract                                  |
+|     *    | Multiply                                  |
+|     /    | Divide                                    |
+|     ^    | Exponent                                  |
+|    %/%   | Integer division                          |
+|    %%    | Modulus (remainder from integer division) |
+
+**Relational** operators allow us to compare values:
+
+| Operator | Description                               |
+|:--------:|-------------------------------------------|
+|     <    | Less than                                 |
+|     >    | Greater than                              |
+|     <=   | Less than or equal to                     |
+|     >=   | Greater than or equal to                  |
+|    ==    | Equal to                                  |
+|    !=    | Not equal to                              |
+|    %%    | Modulus (remainder from integer division) |
+
+**Logical** operators allow us to carry out boolean operations:
+
+| Operator | Description        |
+|:--------:|--------------------|
+| !        | Not                |
+| \|       | Or (element_wise)  |
+| &        | And (element-wise) |
+| \|\|     | Or                 |
+| &&       | And                |
+
+* The difference between `|` and `||` is that `||` evaluates only the first element of the two vectors, whereas `|` evaluates element-wise.
+
+## `filter()`
+
+Great job so far!
+
+Lets talk about `filter()`ing. In our data, sometimes we want to subset rows based off of certain criteria. 
+
+Looking back at the `bfi_data`, say I wanted to look at entries that have `openness` scores of greater than or equal to 3:
+
+```{r example-filter, exercise=FALSE, echo=TRUE}
+openness_cut_off <-
+  bfi_data %>% 
+  filter(openness >= 3)
+
+openness_cut_off
+```
+
+###
+
+### Exercise 4
+
+Give it a go!
+
+With `bfi_data` `filter()` the `age` column to only include ages less than 50 and call it `age_bfi`.
+
+```{r exercise-4, exercise=TRUE}
+
+```
+
+```{r exercise-4-solution}
+age_bfi <-
+  bfi_data %>% 
+  filter(age < 50)
+
+age_bfi
+```
+
+### `filter()`ing with multiple-criteria
+
+Say I was only interested in looking at ages 20-29. 
+
+*HINT: the `&` operator is used to check if two logical operations are TRUE*
+
+```{r filter-multi, exercise=TRUE}
+
+```
+
+```{r filter-multi-solution}
+age_bfi <-
+  bfi_data %>% 
+  filter(age > 20 & age < 29)
+
+age_bfi
+```
+
+
+### using `%in%` with `filter()`
+
+
+Now, there is a special use case when trying to filter out specific variables.
+
+Lets demonstrate using the `starwars` data set (from `dplyr`)
+
+```{r in-filter, exercise=FALSE, echo=TRUE}
+head(starwars)
+```
+
+I want to select only `eye_color` that is blue and red. Some might think that the best way to do it is like so:
+
+```{r in-wrong-example, exercise=FALSE, echo=TRUE}
+starwars %>% 
+  filter(eye_color == c("blue","red"))
+```
+
+Great! Except, if we look at things under the hood of what `R` is doing its not what we hoped. 
+
+`R` cycles through the `c("blue","red")` vector list looking at the entries. In other words it checks if the first row has `"blue"` then checks the second row if it has `"red"`. This can be an issue.
+
+So to specifically get what we want we use `%in%`:
+
+```{r in-right-example, exercise=FALSE, echo=TRUE}
+starwars %>% 
+  filter(eye_color %in% c("blue","red"))
+```
+
+If we compare the output of both of the code chunks above, you'll see that using `%in%` yielded 24 rows while the other method only yielded 15.
+
+### Check your understanding: `filter()`
+
+```{r cyu-filter-1}
+quiz(
+  question("What line of code would I use to `filter()` ages between 20 and 50?",
+    answer("`filter(20 < column > 50`"),
+    answer("`filter(column == 20 - 50)`"),
+    answer("`filter(column > 20 & column < 50)`", correct = TRUE),
+    answer("`filter(column[20:50])`"),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+## `mutate()`
+
+`mutate` adds new variables and preserves existing ones to a data frame.
+
+You're probably going to be using it a lot.
+
+Here is the general use case of `mutate()`
+
+```
+modified_data <-
+  data %>% 
+  mutate(new_column = any_operations(existing_variables))
+```
+
+Looking at `mtcars` say I wanted to divide `wt` by `mpg`.
+
+```{r mutate-example-1, exercise=FALSE, echo=TRUE}
+mtcars %>% 
+  mutate(wt_mpg = wt / mpg)
+```
+
+We can even use functions:
+
+```{r mutate-example-2, exercise=FALSE, echo=TRUE}
+mtcars %>% 
+  mutate(mean_mpg = mean(mpg))
+```
+
+### Exercise 5
+
+Using `mtcars`, create a column called `wt_disp` that multiplies the `wt` and `disp` columns with `mutate()`.
+
+```{r mutate-exercise, exercise=TRUE}
+
+```
+
+```{r mutate-exercise-solution}
+mtcars %>% 
+ mutate(wt_disp = wt * disp )
+```
+
+## `summarize()`
+
+Like `mutate()`, the `summarize()` function also creates new columns, but the calculations that make the new columns must reduce down to a single number.
+
+
+For example, let's compute the mean standard deviation of `age` in `bfi_data`.
+
+```{r summarize-example, exercise=FALSE, echo=TRUE}
+age_bfi <-
+  bfi_data %>% 
+  summarize(mu = mean(age),
+            sigma = sd(age))
+
+age_bfi
+```
+
+Notice that all other columns were dropped. This is necessary, because there’s no obvious way to compress the other columns down to a single row. This is unlike mutate(), which keeps all columns, and more like transmute(), which drops all other columns.
+
+As it is, this is hardly useful. (Though it is useful for creating Table 1 in your papers.) But summarizing is more useful in the context of grouping, coming up next.
+
+### Exercise 6
+
+Get the mean and standard deviation of `conscientious` in `bfi_data` using the `summarize()` function.
+
+```{r summarize-exercise, exercise=TRUE}
+
+```
+
+```{r summarize-exercise-solution}
+bfi_data %>% 
+  summarize(mu = mean(conscientious),
+            sigma = sd(conscientious))
+```
+
+## `group_by()`
+
+The true power of `dplyr` lies in its ability to group a `tibble`, with the `group_by()` function. As usual, this function takes in a `tibble` and returns a (grouped) `tibble.`
+
+```{r group_by-example, exercise=FALSE, echo=TRUE}
+starwars %>% 
+  group_by(species, eye_color)
+```
+
+The only thing different from a regular `tibble` is the indication of grouping variables above the `tibble.` This means that the `tibble` is recognized as having “chunks” defined by unique combinations of `species` and `eye_color`.
+
+-   Humans with blue eyes are one chunk
+-   Droids with yellow eyes are one chunk
+-   Humans with brown are one chunk
+-   etc...
+
+**Notice that the data frame isn’t rearranged by chunk! The grouping is something stored internally about the grouped `tibble.`**
+
+Now that the `tibble` is grouped, operations that you do on a grouped `tibble` will be done independently within each chunk, as if no other chunks exist.
+
+
+### Advanced `group_by()`
+
+You can also create new variables and group by that variable simultaneously. 
+
+Try splitting `height` by “small” and “large” using 60 as a threshold:
+
+```{r group_by-exercise, exercise=TRUE}
+
+```
+
+```{r group_by-exercise-solution}
+starwars %>% 
+  group_by(small_height = height < 60)
+```
+
+
+## Function Types
+
+We’ve seen cases of transforming variables using mutate() and summarize(), both with and without group_by(). How can you know what combination to use? Here’s a summary based on one of three types of functions.
+
+|     Function type    |                                                                   Explanation                                                                   |               Examples              |              In dplyr             |
+|:--------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------:|:---------------------------------:|
+| Vectorized functions | These take a vector, and operate on each component independently to return a vector of the same length. In other words, they work element-wise. | `cos()`, `sin()`, `log()`, `exp()`, `round()` | `mutate()`                          |
+| Aggregate functions  | These take a vector, and return a vector of length 1                                                                                            | `mean()`, `sd()`, `length()`              | `summarize()`, esp with `group_by()`. |
+| Window Functions     | these take a vector, and return a vector of the same length that depends on the vector as a whole.                                              | `lag()`, `rank()`, `cumsum()`             | `mutate()`, esp with `group_by()`     |
