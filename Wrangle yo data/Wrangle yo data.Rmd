@@ -262,6 +262,7 @@ You try!
 `arrange()` our `bfi_data` to the descending order of the `.id` column and call it `desc_bfi`.
 
 ```{r exercise-3, exercise=TRUE}
+
 ```
 
 ```{r exercise-3-solution}
