@@ -397,7 +397,7 @@ Lets demonstrate using the `starwars` data set (from `dplyr`)
 head(starwars)
 ```
 
-I want to select only `eye_color` that is blue and red. Some might think that the best way to do it is like so:
+I want to select only `eye_color` that are blue and red. Some might think that the best way to do it is like so:
 
 ```{r in-wrong-example, exercise=FALSE, echo=TRUE}
 starwars %>% 
@@ -406,7 +406,7 @@ starwars %>%
 
 Great! Except, if we look at things under the hood of what `R` is doing its not what we hoped. 
 
-`R` cycles through the `c("blue","red")` vector list looking at the entries. In other words it checks if the first row has `"blue"` then checks the second row if it has `"red"`. This can be an issue.
+`R` cycles through the `c("blue","red")` vector list looking at the entries. In other words it checks if the first row has `"blue"` then checks the second row if it has `"red"` and so on. This can be an issue.
 
 So to specifically get what we want we use `%in%`:
 
