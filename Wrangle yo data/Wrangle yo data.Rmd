@@ -214,7 +214,7 @@ gender_extra
 
 ### Removing columns with `select()`
 
-Woah, woah, woah, wait a minute. I just realized that some of the rows for `education` is `NA`. I want to remove that column but keep everything else. To do that, I put a "`-`" infront of my "`column_name`".
+Woah, woah, woah, wait a minute. I just realized that some of the rows for `education` are `NA`. I want to remove that column but keep everything else. To do that, I put a "`-`" infront of my "`column_name`".
 
 ```{r select-2, exercise=FALSE, echo=TRUE}
 non_edu_bfi_data <-
@@ -397,7 +397,7 @@ Lets demonstrate using the `starwars` data set (from `dplyr`)
 head(starwars)
 ```
 
-I want to select only `eye_color` that are blue and red. Some might think that the best way to do it is like so:
+I want to select only `eye_color` that are `blue` and `red`. Some might think that the best way to do it is like so:
 
 ```{r in-wrong-example, exercise=FALSE, echo=TRUE}
 starwars %>% 
