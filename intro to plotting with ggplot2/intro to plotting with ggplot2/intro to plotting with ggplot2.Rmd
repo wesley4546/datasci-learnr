@@ -1,0 +1,182 @@
+---
+title: "Intro to plotting with ggplot2"
+output: 
+  learnr::tutorial:
+    progressive: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+library(tidyverse)
+library(gapminder)
+gradethis_setup()
+```
+
+## Getting Started
+
+By the end of this lesson, you will be able to:
+
+ * Identify the plotting framework available in R
+ * Have a sense of why we’re learning the ggplot2 tool
+ * Have a sense of the importance of statistical graphics in communicating information
+ * Identify the seven components of the grammar of graphics underlying ggplot2
+ * Use different geometric objects and aesthetics to explore various plot types.
+ 
+### Resources
+For me, I learned `ggplot2` from Stack Overflow by googling error messages or “how to … in ggplot2” queries, together with persistence. It might take you a bit longer to make a graph using `ggplot2` if you’re unfamiliar with it, but persistence pays off.
+
+Here are some good walk-throughs that introduce ggplot2, in a similar way to today’s lesson:
+
+ * [r4ds: data-vis](http://r4ds.had.co.nz/data-visualisation.html) chapter.
+    * Perhaps the most compact “walk-through” style resource.
+ * The [ggplot2 book](http://webcat2.library.ubc.ca/vwebv/holdingsInfo?bibId=8489511), Chapter 2.
+    * A bit more comprehensive “walk-through” style resource.
+    * Section 1.2 introduces the actual grammar components.
+ * [Jenny Bryant’s ggplot2 tutorial](https://github.com/jennybc/ggplot2-tutorial).
+    * Has a lot of examples, but less dialogue.
+    
+    
+Here are some good resource to use as a reference:
+
+ * [ggplot2 cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf)
+ * [R Graphics Cookbook](http://www.cookbook-r.com/Graphs/)
+    * Good as a reference if you want to learn how to make a specific type of plot.
+
+## Orientation to plotting in R
+
+### A little history
+
+Traditionally, plots in R are produced using “base R” methods, the main function here being `plot()`. This method tends to be quite involved, and requires a lot of “coding by hand”. That said, for simple plots and some built-in functions, using `plot()` is great. For example, R has built-in regression diagnostics:
+
+```{r}
+mod <- lm(dist ~ speed, data = cars)
+par(mfrow = c(2, 2))
+plot(mod)
+```
+
+Then, an R package called `lattice` was created that aimed to make it easier to create multiple “panels” of plots. It seems to have gone by the wayside in the R community.
+
+After `lattice` came `ggplot2`, which provides a very powerful and relatively un-fiddly framework for making plots. It has a theoretical underpinning, too, based on the Grammar of Graphics, first described by Leland Wilkinson in his [“Grammar of Graphics” book](http://resolve.library.ubc.ca/cgi-bin/catsearch?bid=5507286). With `ggplot2`, you can make a great many type of plots with minimal code. It’s been a hit in and outside of the R community.
+
+ * A big advantage of `ggplot2` is that many people have written extensions for it, such as [`tidybayes`](https://mjskay.github.io/tidybayes/articles/tidybayes.html) (for plotting distributions and intervals), [`gganimate`](https://gganimate.com/) (for animations and gifs) and [`ggforce`](https://ggforce.data-imaginist.com/) (lots of very customizable features).
+ 
+Check out [this comparison of the three](this comparison of the three) by Joseph V. Casillas.
+
+A newer tool is called `plotly`, which was actually developed outside of R, but the `plotly` R package accesses the plotly functionality. `plotly` graphs allow for interactive exploration of a plot. You can convert `ggplot2` graphics to a `plotly` graph, too.
+
+There are also some non-R plotting interfaces that are useful when you need highly customized solutions, such as [D3](https://d3js.org/), accessible in R using the [r2d3 package](https://rstudio.github.io/r2d3/).
+
+### TL;DR
+
+We’re using `ggplot2` in DataSci.
+
+## Just plot it
+
+The human visual cortex is a powerful thing. If you’re wanting to point someone’s attention to a bunch of numbers, you probably won’t get any “aha” moments by displaying a large table like this, either in a report or (especially!) a presentation.
+
+Make a plot to communicate your message!
+
+If you really feel the need to tell your audience exactly what every quantity evaluates to, consider putting your table in an appendix. Because chances are, the reader doesn’t care about the exact numeric values. Or, perhaps you just want to point out one or a few numbers, in which case you can put that number directly on a plot.
+
+## The grammar of graphics
+
+You can think of the grammar of graphics as a systematic approach for describing the components of a graph. It has seven components (the ones in bold are required to be specifed explicitly in `ggplot2`):
+
+ * **Data**
+   * The data that you’re feeding into a plot.
+ * **Aesthetic mappings**
+   * How are variables (columns) from your data connect to a visual dimension?
+   * Horizontal positioning, vertical positioning, size, colour, shape, etc.
+   * These visual dimensions are called “aesthetics”
+ * **Geometric objects**
+   * What are the objects that are actually drawn on the plot?
+   * A point, a line, a bar, a histogram, a density, etc.
+ * Scales
+   * How is a variable mapped to its aesthetic?
+   * Will it be mapped linearly? On a log scale? Something else?
+   * This includes things like the color scale
+     * e.g., c(control, treatment_1, treatment_2) -> c(“blue”, “green”, “red”)
+ * Statistical transformations
+   * Whether and how the data are combined/transformed before being plotted
+   * e.g., in a bar chart, data are transformed into their frequencies; in a box-plot, data are transformed to a five-number summary.
+ * Coordinate system
+   * This is a specification of how the position aesthetics (x and y) are depicted on the plot. For example, rectangular/cartesian, or polar coordinates.
+ * Facet
+   * This is a specification of data variables that partition the data into smaller “sub plots”, or panels.
+
+These components are like parameters of statistical graphics, defining the “space” of statistical graphics. In theory, there is a one-to-one mapping between a plot and its grammar components, making  * this a useful way to specify graphics.
+
+###
+
+### Example: Scatterplot grammar
+
+For example, consider the following plot from the gapminder data set. For now, don’t focus on the code, just the graph itself.
+
+```{r}
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+  geom_point(alpha = 0.1) +
+  scale_x_log10("GDP per capita", labels = scales::dollar_format()) +
+  theme_bw() +
+  ylab("Life Expectancy")
+```
+This scatterplot has the following components of the grammar of graphics.
+
+|   Grammar Component   |           Specification          |
+|:----------------------|:---------------------------------|
+| **data**              | gapminder                        |
+| **aesthetic mapping** | **x:** gdpPercap, **y:** lifeExp |
+| **geometric object**  | points                           |
+| scale                 | **x:** log10, **y:** linear      |
+| statistical transform | none                             |
+| coordinate system     | rectangular                      |
+| facetting             | none                             |
+
+Note that `x` and `y` aesthetics are required for scatterplots (or “point” geometric objects). In general, each geometric object has its own required set of aesthetics.
+
+
+### Bar chart grammar
+
+Give it a go!
+
+Consider the following plot. Don't concern yourself with the code at this point.
+
+```{r}
+gapminder %>% 
+  filter(year == 2007) %>% 
+  mutate(continent = fct_infreq(continent)) %>% 
+  ggplot(aes(continent)) +
+  geom_bar() +
+  theme_bw()
+```
+
+```{r bar-chart-grammar, echo = FALSE}
+quiz( caption = "Check your understanding:",
+  question("For the data component, what is the specification?",
+           answer("`gapminder`", correct = TRUE),
+           answer("`continent`"),
+           answer("`theme_bw()`"),
+           answer("`geom_bar()`"),
+           random_answer_order = TRUE,
+           allow_retry = TRUE
+  ),
+  question("For the aesthetic mapping component, what is the specification?",
+           answer("`gapminder`"),
+           answer("`continent`", correct = TRUE),
+           answer("`theme_bw()`"),
+           answer("`geom_bar()`"),
+           random_answer_order = TRUE,
+           allow_retry = TRUE
+  ),
+    question("For the geometric object component, what is the specification?",
+           answer("`gapminder`"),
+           answer("`continent`"),
+           answer("`theme_bw()`"),
+           answer("`geom_bar()`", correct = TRUE),
+           random_answer_order = TRUE,
+           allow_retry = TRUE
+  )
+)
+```
+

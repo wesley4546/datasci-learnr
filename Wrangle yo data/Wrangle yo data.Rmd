@@ -12,7 +12,8 @@ palmerpenguins::penguins
 ```{r setup, include=FALSE}
 library(learnr)
 library(dplyr)
-knitr::opts_chunk$set(echo = FALSE)
+library(gradethis)
+gradethis_setup()
 
 bfi_scored <- psych::scoreVeryFast(keys = psych::bfi.keys,
                                    items = psych::bfi,
@@ -197,8 +198,6 @@ gender_neuro <-
 gender_neuro
 ```
 
-
-
 ### Removing columns with `select()`
 
 Woah, woah, woah, wait a minute. I just realized that some of the rows for `education` are `NA`. I want to remove that column but keep everything else. To do that, I put a "`-`" infront of my "`column_name`".
@@ -214,15 +213,13 @@ non_edu_bfi_data
 ### Check your understanding: `select()`
 
 ```{r cyu-select}
-quiz(
-  question("What do I put infront of my column name to remove it using `select()`?",
-    answer("`+`"),
-    answer("`remove()`"),
-    answer("`-`", correct = TRUE),
-    answer("`!=`"),
-    random_answer_order = TRUE,
-    allow_retry = TRUE
-  )
+question("What do I put infront of my column name to remove it using `select()`?",
+         answer("`+`"),
+         answer("`remove()`"),
+         answer("`-`", correct = TRUE),
+         answer("`!=`"),
+         random_answer_order = TRUE,
+         allow_retry = TRUE
 )
 ```
 
@@ -524,9 +521,6 @@ The only thing different from a regular `tibble` is the indication of grouping v
 **Notice that the data frame isn’t rearranged by chunk! The grouping is something stored internally about the grouped `tibble.`**
 
 Now that the `tibble` is grouped, operations that you do on a grouped `tibble` will be done independently within each chunk, as if no other chunks exist.
-
-
-
 
 ## Exercise 3
 
