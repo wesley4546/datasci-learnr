@@ -6,6 +6,9 @@ output:
 runtime: shiny_prerendered
 ---
 
+palmerpenguins::penguins
+
+
 ```{r setup, include=FALSE}
 library(learnr)
 library(dplyr)
@@ -113,7 +116,7 @@ vs.
 
 See how using the `%>%` can make the code more intuitive and read-able?
 
-### Exercise 1
+### Piping (`%>%`) Exercise
 
 Using `mtcars` print the `head()` using `%>%`.
 
@@ -194,23 +197,7 @@ gender_neuro <-
 gender_neuro
 ```
 
-### Exercise 2
 
-Now you try!
-
-From the `bfi_data` data frame, select `.id`,`gender`, and `extraversion` and name it `gender_extra`
-
-```{r select-1, exercise=TRUE, exercise.eval = TRUE}
-
-```
-
-```{r select-1-solution}
-gender_extra <-
-  bfi_data %>% 
-  select(.id, gender, extraversion)
-
-gender_extra
-```
 
 ### Removing columns with `select()`
 
@@ -255,9 +242,27 @@ desc_bfi <-
 desc_bfi
 ```
 
-### Exercise 3
+## Exercise 1
 
-You try!
+### `select()`ing
+
+Now you try!
+
+From the `bfi_data` data frame, select `.id`,`gender`, and `extraversion` and name it `gender_extra`
+
+```{r select-1, exercise=TRUE, exercise.eval = TRUE}
+
+```
+
+```{r select-1-solution}
+gender_extra <-
+  bfi_data %>% 
+  select(.id, gender, extraversion)
+
+gender_extra
+```
+
+### `arrange()`ing
 
 `arrange()` our `bfi_data` to the descending order of the `.id` column and call it `desc_bfi`.
 
@@ -272,7 +277,6 @@ desc_bfi <-
 
 desc_bfi
 ```
-
 ## Logical Operators in `R`
 
 Here are the concepts we'll be exploring in this lesson:
@@ -349,23 +353,7 @@ openness_cut_off
 
 ###
 
-### Exercise 4
 
-Give it a go!
-
-With `bfi_data` `filter()` the `age` column to only include ages less than 50 and call it `age_bfi`.
-
-```{r exercise-4, exercise=TRUE}
-
-```
-
-```{r exercise-4-solution}
-age_bfi <-
-  bfi_data %>% 
-  filter(age < 50)
-
-age_bfi
-```
 
 ### `filter()`ing with multiple-criteria
 
@@ -460,7 +448,28 @@ mtcars %>%
   mutate(mean_mpg = mean(mpg))
 ```
 
-### Exercise 5
+
+## Exercise 2
+
+### `filter()`ing
+
+Give it a go!
+
+With `bfi_data` `filter()` the `age` column to only include ages less than 50 and call it `age_bfi`.
+
+```{r exercise-4, exercise=TRUE}
+
+```
+
+```{r exercise-4-solution}
+age_bfi <-
+  bfi_data %>% 
+  filter(age < 50)
+
+age_bfi
+```
+
+### `mutate()`ing
 
 Using `mtcars`, create a column called `wt_disp` that multiplies the `wt` and `disp` columns with `mutate()`.
 
@@ -472,6 +481,7 @@ Using `mtcars`, create a column called `wt_disp` that multiplies the `wt` and `d
 mtcars %>% 
  mutate(wt_disp = wt * disp )
 ```
+
 
 ## `summarize()`
 
@@ -493,19 +503,7 @@ Notice that all other columns were dropped. This is necessary, because there’s
 
 As it is, this is hardly useful. (Though it is useful for creating Table 1 in your papers.) But summarizing is more useful in the context of grouping, coming up next.
 
-### Exercise 6
 
-Get the mean and standard deviation of `conscientious` in `bfi_data` using the `summarize()` function.
-
-```{r summarize-exercise, exercise=TRUE}
-
-```
-
-```{r summarize-exercise-solution}
-bfi_data %>% 
-  summarize(mu = mean(conscientious),
-            sigma = sd(conscientious))
-```
 
 ## `group_by()`
 
@@ -527,6 +525,24 @@ The only thing different from a regular `tibble` is the indication of grouping v
 
 Now that the `tibble` is grouped, operations that you do on a grouped `tibble` will be done independently within each chunk, as if no other chunks exist.
 
+
+
+
+## Exercise 3
+
+### `summarize()`ing
+
+Get the mean and standard deviation of `conscientious` in `bfi_data` using the `summarize()` function.
+
+```{r summarize-exercise, exercise=TRUE}
+
+```
+
+```{r summarize-exercise-solution}
+bfi_data %>% 
+  summarize(mu = mean(conscientious),
+            sigma = sd(conscientious))
+```
 
 ### Advanced `group_by()`
 
@@ -553,3 +569,60 @@ We’ve seen cases of transforming variables using mutate() and summarize(), bot
 | Vectorized functions | These take a vector, and operate on each component independently to return a vector of the same length. In other words, they work element-wise. | `cos()`, `sin()`, `log()`, `exp()`, `round()` | `mutate()`                          |
 | Aggregate functions  | These take a vector, and return a vector of length 1                                                                                            | `mean()`, `sd()`, `length()`              | `summarize()`, esp with `group_by()`. |
 | Window Functions     | these take a vector, and return a vector of the same length that depends on the vector as a whole.                                              | `lag()`, `rank()`, `cumsum()`             | `mutate()`, esp with `group_by()`     |
+
+
+## Put it all together
+
+Great! You've made it to the end. Pat yourself on the back!
+
+In your data analysis, you're more than likely going to use a combination of the functions shown in this tutorial.
+
+Lets practice!
+
+### Practice 1
+
+Looking at our `bfi_data`, I want to get the mean and standard deviation of `openness` all 40-49 year old participants grouped by their `education.`
+
+```{r summ-group-filter-exercise, exercise = TRUE}
+
+```
+
+```{r summ-group-filter-exercise-solution}
+bfi_data %>% 
+  group_by(education) %>% 
+  filter(age >= 40 & age <= 49) %>% 
+  summarize(mean = mean(openness),
+            sd = sd(openness))
+```
+
+### Practice 2
+
+I want to subset female `neuroticism` scores with level 3 `education.`
+
+```{r female-neuroticism, exercise = TRUE}
+
+```
+
+```{r female-neuroticism-solution}
+bfi_data %>% 
+  filter(gender == "female") %>% 
+  filter(education == 3) %>% 
+  select(neuroticism)
+```
+
+
+### Practice 3
+
+Using `mtcars` I want to group by `cyl`, and find the mean of `mpg`, `disp`, and `wt` for each group of `cyl`.
+
+```{r mtcars-cyl, exercise = TRUE}
+
+```
+
+```{r mtcars-cyl-solution}
+mtcars %>% 
+  group_by(cyl) %>% 
+  summarize(mean_mpg = mean(mpg),
+            mean_disp = mean(disp),
+            mean_wt = mean(wt))
+```
