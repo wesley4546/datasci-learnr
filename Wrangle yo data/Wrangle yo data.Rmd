@@ -255,9 +255,13 @@ From the `bfi_data` data frame, select `.id`,`gender`, and `extraversion` and na
 gender_extra <-
   bfi_data %>% 
   select(.id, gender, extraversion)
-
-gender_extra
 ```
+
+
+```{r select-1-check}
+grade_code()
+```
+
 
 ### `arrange()`ing
 

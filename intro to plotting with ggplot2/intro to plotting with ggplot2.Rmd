@@ -276,13 +276,11 @@ Produce a line chart showing the concentration over time. Specifically, the plot
 | coordinate system     | rectangular |
 | facetting             | none |
 
-```
-ggplot(FILL_THIS_IN, aes(FILL_THIS_IN, FILL_THIS_IN)) +
-  FILL_THIS_IN()
-```
+Fill in the code below, replace `FILL_THIS_IN` with the correct code.
 
 ```{r mauna-exercise, exercise = TRUE}
-
+ggplot(FILL_THIS_IN, aes(FILL_THIS_IN, FILL_THIS_IN)) +
+  FILL_THIS_IN()
 ```
 
 ```{r mauna-exercise-solution}
