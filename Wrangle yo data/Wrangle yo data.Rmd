@@ -257,7 +257,6 @@ gender_extra <-
   select(.id, gender, extraversion)
 ```
 
-
 ```{r select-1-check}
 grade_code()
 ```
