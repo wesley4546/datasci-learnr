@@ -80,7 +80,7 @@ The following are examples of untidy data. They’re untidy for either of the ca
 
 Note that untidy does not always mean “bad”, especially when the data set is too wide.
 
-**Untidy Example 1**: The following table is untidy because there are multiple observations per row. *It’s too wide.*
+**Untidy Example 1**: The following table is untidy because there are multiple observations per row. *Its too wide.*
 
 ```{r, echo = FALSE}
 haireye_untidy <- haireye %>%
@@ -215,6 +215,8 @@ Consider the Lord of the Rings data:
 lotr  <- readr::read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/lotr_tidy.csv")
 lotr
 ```
+
+[Describe problem]
 
 ```{r tidy-format-question, echo = FALSE}
 question("1. Would you say this data is in tidy format?",
