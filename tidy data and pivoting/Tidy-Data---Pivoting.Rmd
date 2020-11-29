@@ -327,7 +327,8 @@ iris2_longer <- iris2 %>%
                names_to  = c("part", ".value"), 
                names_sep = "_")
 iris2 %>% 
-  knitr::kable()
+  head() %>% 
+  knitr::kable() 
 ```
 
 Although we probably wouldn’t, we could view this as having two variables bundled into the column names:
@@ -590,7 +591,7 @@ Want to link two or more columns when looking for combinations? Use `nesting()`.
   - Use `rnorm()`
 - `y` calculated as the `x` values + N(0,1) error. 
 
-```{r exercise = TRUE}
+```{r data_nesting, exercise = TRUE}
 n <- 100
 FILL_THIS_IN(label = FILL_THIS_IN,
              FILL_THIS_IN = rnorm(n),
