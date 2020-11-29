@@ -13,6 +13,7 @@ library(tidyr)
 library(gradethis)
 library(stringr)
 gradethis_setup()
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ## Getting Started
@@ -62,12 +63,14 @@ haireye <- datasets::HairEyeColor %>%
   janitor::clean_names() %>%
   select(-c(sex)) %>%
   distinct(hair, eye, .keep_all = TRUE)
+```
 
+```{r echo=TRUE}
 haireye %>%
   knitr::kable()
 ```
 
-```{r}
+```{r echo=TRUE}
 haireye %>%
   tidyr::uncount(n) %>%
   head()
@@ -94,11 +97,28 @@ Let me ask you, if you wanted to calculate the total number of people with each 
 
 It seems like a simple question but because the data are in the format it is, it can be a challenge.
 
-**Untidy Example 3:** This is untidy because each observational unit is spread across multiple columns. It’s too long. In fact, we needed to add an identifier for each observation, otherwise we would have lost which row belongs to which observation!
+**Untidy Example 2:** This is untidy because each observational unit is spread across multiple columns. It’s too long. In fact, we needed to add an identifier for each observation, otherwise we would have lost which row belongs to which observation!
 
 ```{r}
-
+haireye %>% 
+  mutate(obs = 1:n()) %>% 
+  pivot_longer(cols = hair:eye, names_to = "body_part", values_to = "colour") %>% 
+  select(-n, n) %>% 
+  DT::datatable(rownames = FALSE)
 ```
+
+**Untidy Example 3**: Just when you thought a data set couldn't get any longer! Now, each variable has its own row: hair colour, eye colour, and `n`. This demonstrates that there's no such thing as "long" and "wide" format, since these terms are relative. 
+
+```{r, echo = FALSE}
+haireye %>% 
+  mutate(obs = 1:n(),
+         n   = as.character(n)) %>% 
+  pivot_longer(cols = c(hair, eye, n), names_to = "variable", values_to = "value") %>% 
+  DT::datatable(rownames = FALSE)
+```
+
+_This is the sort of format that is common pulling data from the web or other "Big Data" sources._
+
 
 ### Pivoting Tools
 
@@ -114,7 +134,7 @@ History: R has seen many attempts at reshaping, all that’s progressively gotte
 
 Let’s start with pivoting in the simplest case where only one variable is “out of place”. We’ll use the hair and eye colour example from before, using the untidy data version from Example 1:
 
-```{r}
+```{r echo=TRUE}
 haireye_untidy <- haireye %>%
   mutate(eye = str_c(eye, "_eyed")) %>%
   pivot_wider(id_cols = hair, names_from = eye, values_from = n)
@@ -130,7 +150,8 @@ The eye colour variable is spread out across columns. To fix this, we need to co
 Doing this, we obtain:
 
 ```{r}
-
+haireye_untidy %>% 
+  pivot_longer(contains("eyed"), names_to = "eye", values_to = "n")
 ```
 
 For the reverse operation, we take the column `eye` and make each unique entry a new column, and the values of those columns take on `n.`
@@ -147,7 +168,7 @@ For the reverse operation, we take the column `eye` and make each unique entry a
 
 Possibly the trickiest bit is in identifying the column names. We could list all of them, but it’s not robust to changes:
 
-```{r}
+```{r echo=TRUE}
 haireye_untidy %>%
   pivot_longer(
     cols = c(Blue_eyed, Brown_eyed, Green_eyed, Hazel_eyed),
@@ -158,7 +179,7 @@ haireye_untidy %>%
 
 We could identify a range. This is more robust, but still not very robust.
 
-```{r}
+```{r echo=TRUE}
 haireye_untidy %>%
   pivot_longer(
     cols = Blue_eyed:Hazel_eyed,
@@ -170,7 +191,7 @@ haireye_untidy %>%
 Better is to use helper functions from the `tidyselect` package. In this case, we know the columns contain the text “eyed”, so let’s use `tidyselect::contains()`:
 
 
-```{r}
+```{r echo=TRUE}
 haireye_untidy %>%
   pivot_longer(
     cols = contains("eyed"),
@@ -181,7 +202,7 @@ haireye_untidy %>%
 
 Yet another way is to indicate everything except the hair column:
 
-```{r}
+```{r echo=TRUE}
 haireye_untidy %>%
   pivot_longer(
     cols = -hair,
@@ -198,7 +219,7 @@ Like `pivot_longer()`, `pivot_wider()` takes a data frame and returns a data fra
 - `names_from`: the new column names are coming from an old column. Which column is this?
 - `values_from`: the values under the new columns are coming from an old column. Which column is this?
 
-```{r}
+```{r echo=TRUE}
 haireye %>%
   pivot_wider(
     id_cols = hair,
@@ -305,6 +326,8 @@ iris2_longer <- iris2 %>%
   pivot_longer(cols      = c(-id, -species), 
                names_to  = c("part", ".value"), 
                names_sep = "_")
+iris2 %>% 
+  knitr::kable()
 ```
 
 Although we probably wouldn’t, we could view this as having two variables bundled into the column names:
@@ -313,6 +336,10 @@ Although we probably wouldn’t, we could view this as having two variables bund
 “Dimension”, either `length` or `width.`
 The resulting tidy data frame would then be:
 
+```{r}
+iris2_longest
+```
+
 More realistic is the situation where there are _multiple observations per row_:
 
 An observation of (length, width) of the sepal.
@@ -320,7 +347,7 @@ An observation of (length, width) of the petal.
 The resulting tidy data frame has a length that’s in between the above two:
 
 ```{r}
-
+iris2_longer
 ```
 
 ### `pivot_longer()`
@@ -334,7 +361,7 @@ To obtain the case where two (or more) variables are contained in column names, 
 
 Here is the code:
 
-```{r}
+```{r echo = TRUE}
 iris2 %>% 
   pivot_longer(cols      = c(-species, -id), 
                names_to  = c("part", "dimension"),
@@ -349,7 +376,7 @@ To obtain the case where multiple observations are contained in one row, here’
 `names_to`: As above, except this time, one part of the old column names are going to stay as columns (in this case, “length” and “width”). Indicate "`.value`" instead of a new column name.
 `values_to`: Not needed! You’ve already indicated that using the "`.value`" placeholder.
 
-```{r}
+```{r echo = TRUE}
 iris2 %>% 
   pivot_longer(cols      = c(-id, -species), 
                names_to  = c("part", ".value"), 
@@ -367,7 +394,7 @@ If two or more columns contain parts of a variable name (i.e., each unique combi
 
 Here is the code to go from the longest form to the original:
 
-```{r}
+```{r echo = TRUE}
 iris2_longest %>% 
   pivot_wider(id_cols     = c(id, species),
               names_from  = c(part, dimension), 
@@ -384,7 +411,7 @@ If variables are spread out amongst rows and columns (for example, “sepal widt
 
 Here is the code to go from the “semi-long” form to the original:
 
-```{r}
+```{r echo = TRUE}
 iris2_longer %>% 
   pivot_wider(id_cols     = c(id, species), 
               names_from  = part, 
@@ -395,55 +422,34 @@ iris2_longer %>%
 ### You Try!
 
 ```{r}
-# data.frame skeleton
-family_data <-
+communication_data <-
   tibble(
-    wave = c(rep(1, 100), rep(2, 100)),
-    communicationscore = 0,
-    satisfactionscore = 0,
-    groupid = rep(1:100, each = 2),
-    member = rep(c("child","parent"), 100)
+    w1_comm_parent = rnorm(500,5,1),
+    w1_comm_child = w1_comm_parent + rnorm(500, 0, 1),
+    w2_comm_parent = ((w1_comm_parent + w1_comm_child)/2) + .5 ,
+    w2_comm_child = ((w1_comm_parent + w1_comm_child)/2) +  1
   )
 
-# Simulating scores
-for(i in 1:200){
-  # Children
-  if(family_data[i,5] == "child"){
-    # Wave 1
-    if(family_data[i,1] == 1){
-      family_data[i,2] <- family_data[i,2] + rnorm(1, mean = 5, sd = 1)
-      family_data[i,3] <- family_data[i,2] + rnorm(1, mean = 5, sd = 1)
-    }
-    # Wave 2
-    else{
-      family_data[i,2] <- family_data[i,2] + rnorm(1, mean = 6, sd = 1)
-      family_data[i,3] <- family_data[i,2] + rnorm(1, mean = 6, sd = 1)
-    }
-  }
-  # Parent
-  else{
-    # Wave 1
-    if(family_data[i,1] == 1){
-      family_data[i,2] <- family_data[i,2] + rnorm(1, mean = 6, sd = 1)
-      family_data[i,3] <- family_data[i,2] + rnorm(1, mean = 6, sd = 1)
-    }
-    # Wave 2
-    else{
-      family_data[i,2] <- family_data[i,2] + rnorm(1, mean = 7, sd = 1)
-      family_data[i,3] <- family_data[i,2] + rnorm(1, mean = 7, sd = 1)
-    }
-  }
-}
-
-# Data wider
-fam_data <- family_data %>% 
-  pivot_wider(
-    id_cols = c(wave, groupid, member),
-    names_from = member,
-    names_sep = "_",
-    values_from = c(communicationscore, satisfactionscore)
+satisfaction_data <-
+  (communication_data + rnorm(500, 1, .5) + 1) %>% 
+  rename(
+    w1_satis_parent = w1_comm_parent,
+    w1_satis_child = w1_comm_child,
+    w2_satis_parent = w2_comm_parent,
+    w2_satis_child = w2_comm_child
   )
 
+fam_data <- 
+  communication_data %>% 
+  bind_cols(satisfaction_data) %>% 
+  mutate(family_id = row_number()) %>% 
+  relocate(family_id)
+
+fam_long_data <- fam_data %>% 
+  pivot_longer(cols = (-family_id),
+               names_to = c("wave","type","member"),
+               names_sep = "_",
+               values_to = "score")
 ```
 
 
@@ -452,17 +458,17 @@ fam_data %>%
   pivot_longer(
     cols = FILL_THIS_IN,
     names_to = FILL_THIS_IN,
-    names_sep = FILL_THIS_IN
+    names_sep = FILL_THIS_IN,
+    values_to = FILL_THIS_IN
   )
 ```
 
 ```{r family-exercise-long-solution}
-fam_data %>%
-  pivot_longer(
-    cols = c(-wave, -groupid),
-    names_to = c("type", ".value"),
-    names_sep = "_"
-  )
+fam_data %>% 
+  pivot_longer(cols = (-family_id),
+               names_to = c("wave","type","member"),
+               names_sep = "_",
+               values_to = "score")
 ```
 
 ```{r family-exercise-long-check, echo = FALSE}
@@ -575,3 +581,18 @@ df %>%
 Want to link two or more columns when looking for combinations? Use `nesting()`.
 
 ### You try!
+
+1. Create a tibble that has the following columns:
+
+- A `label` column with `"Sample A"` in its entries.
+- 100 random observations drawn from the N(0,1) distribution in the column `x`
+  - "N" means the normal distribution. "(0, 1)" means mean = 0, sd = 1.
+  - Use `rnorm()`
+- `y` calculated as the `x` values + N(0,1) error. 
+
+```{r exercise = TRUE}
+n <- 100
+FILL_THIS_IN(label = FILL_THIS_IN,
+             FILL_THIS_IN = rnorm(n),
+             FILL_THIS_IN)
+```
