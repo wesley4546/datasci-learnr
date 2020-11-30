@@ -6,6 +6,8 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(gradethis)
+gradethis_setup()
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -19,6 +21,259 @@ verify or filter data in one data table against another, etc.
 ## Worksheet
 
 You can find a worksheet template for today [here](https://raw.githubusercontent.com/USF-Psych-DataSci/Classroom/master/tutorials/s07_tibble-join-exercise.Rmd).
+
+```{r}
+fam_data <- read.csv("https://raw.githubusercontent.com/wesley4546/teach-r-temp/master/data/family_data.csv?token=ANSE7O4LLSHB3RH7IFICDFK7ZVXLC")
+fam_long_data <- read.csv("https://raw.githubusercontent.com/wesley4546/teach-r-temp/master/data/family_long_data.csv?token=ANSE7O5METBJEZG6MGXP4DS7ZVXM6")
+```
+
+## Requirements
+
+You will need data from Joey Bernhardt's `singer` R package for this exercise. 
+
+You can download the singer data from the `USF-Psych-DataSci/Classroom` repo:
+
+```{r}
+songs <- read.csv("https://github.com/USF-Psych-DataSci/Classroom/raw/master/data/singer/songs.csv")
+locations <- read.csv("https://github.com/USF-Psych-DataSci/Classroom/raw/master/data/singer/loc.csv")
+```
+
+If you want, you could instead install the `singer` package itself. To do that,
+you'll need to install `devtools`. Running this code in your console should do 
+the trick:
+
+```
+install.packages("devtools")
+devtools::install_github("JoeyBernhardt/singer")
+```
+
+Load required packages:
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(singer)
+knitr::opts_chunk$set(fig.width=4, fig.height=3, warning = FALSE, fig.align = "center")
+```
+
+<!-- The following chunk allows errors when knitting -->
+
+```{r allow errors, echo = FALSE}
+knitr::opts_chunk$set(error = TRUE)
+```
+
+## Exercise 1: `singer`
+
+The package `singer` comes with two smallish data frames about songs. 
+Let's take a look at them (after minor modifications by renaming and shuffling):
+
+```{r echo=TRUE}
+(time <- as_tibble(songs) %>% 
+   rename(song = title))
+```
+
+```{r echo=TRUE}
+(album <- as_tibble(locations) %>% 
+   select(title, everything()) %>% 
+   rename(album = release,
+          song  = title))
+```
+
+
+1. We really care about the songs in `time`. But, for which of those songs do we 
+   know its corresponding album?
+
+```{r inner_join_exercise, exercise = TRUE}
+time %>% 
+  FILL_THIS_IN(album, by = FILL_THIS_IN)
+```
+
+```{r inner_join_exercise-solution}
+time %>% 
+  inner_join(album, by = c("song","artist_name"))
+```
+
+```{r inner_join_exercise-check, echo = FALSE}
+grade_code()
+```
+
+2. Go ahead and add the corresponding albums to the `time` tibble, being sure to 
+   preserve rows even if album info is not readily available.
+
+```{r left_join_exercise, exercise = TRUE}
+time %>% 
+  FILL_THIS_IN(album, by = FILL_THIS_IN)
+```
+
+```{r left_join_exercise-solution, exercise=TRUE}
+time %>% 
+  left_join(album, by = c("song","artist_name"))
+```
+
+```{r left_join_exercise-check, echo = FALSE}
+grade_code()
+```
+
+3. Which songs do we have "year", but not album info?
+
+```{r anti_join_exercise, exercise = TRUE}
+time %>% 
+  FILL_THIS_IN(album, by = "song")
+```
+
+```{r anti_join_exercise-solution, exercise = TRUE}
+time %>% 
+  anti_join(album, by = "song")
+```
+
+```{r anti_join_exercise-check, echo = FALSE}
+grade_code()
+```
+
+4. Which artists are in `time`, but not in `album`?
+
+```{r anti_join_two_exercise, exercise = TRUE}
+time %>% 
+  anti_join(album, by = "FILL_THIS_IN")
+```
+
+```{r anti_join_two_exercise-solution}
+time %>% 
+  anti_join(album, by = "artist_name")
+```
+
+```{r anti_join_two_exercise-check, echo = FALSE}
+grade_code()
+```
+
+5. You've come across these two tibbles, and just wish all the info was 
+   available in one tibble. What would you do?
+
+```{r full_joing_exercise, exercise = TRUE}
+FILL_THIS_IN %>% 
+  FILL_THIS_IN(FILL_THIS_IN, by = "song")
+```
+
+```{r full_joing_exercise-solution}
+album %>% 
+  full_join(select(album, -artist_name), by = "song")
+```
+
+```{r full_joing_exercise-check, echo = FALSE}
+album %>% 
+  full_join(select(album, -artist_name), by = "song")
+```
+
+## Exercise 2: LOTR
+
+Load in three tibbles of data on the Lord of the Rings:
+
+```{r include=FALSE}
+fell <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Fellowship_Of_The_Ring.csv")
+ttow <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Two_Towers.csv")
+retk <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Return_Of_The_King.csv")
+```
+
+```{r echo=TRUE}
+fell 
+ttow 
+retk 
+```
+
+
+1. Combine these into a single tibble.
+
+```{r bing_rows_exercise, exercise = TRUE}
+FILL_THIS_IN(fell, FILL_THIS_IN)
+```
+
+```{r bing_rows_exercise-solution}
+bind_rows(fell,ttow,retk)
+```
+
+```{r bing_rows_exercise-check, echo = FALSE}
+grade_code()
+```
+
+2. Which races are present in "The Fellowship of the Ring" (`fell`), but not in 
+   any of the other ones?
+
+```{r anti_join_exercise_lotr, exercise = TRUE}
+fell %>% 
+  anti_join(ttow, by = "Race") %>% 
+  FILL_THIS_IN(FILL_THIS_IN, by = "Race")
+```
+
+```{r anti_join_exercise_lotr-solution}
+fell %>% 
+  anti_join(ttow, by = "Race") %>% 
+  anti_join(retk, by = "Race")
+```
+
+```{r anti_join_exercise_lotr-check, echo = FALSE}
+grade_code()
+```
+
+## Exercise 3: Set Operations
+
+Let's use three set functions: `intersect`, `union` and `setdiff`. We'll work 
+with two toy tibbles named `y` and `z`, similar to Data Wrangling Cheatsheet
+
+```{r}
+(y <-  tibble(x1 = LETTERS[1:3], x2 = 1:3))
+```
+
+```{r}
+(z <- tibble(x1 = c("B", "C", "D"), x2 = 2:4))
+```
+
+1. Rows that appear in both `y` and `z`
+
+```{r intersect_exercise, exercise = TRUE}
+FILL_THIS_IN(y, z)
+```
+
+```{r intersect_exercise-solution}
+intersect(y, z)
+```
+
+```{r intersect_exercise-check, echo = FALSE}
+grade_code()
+```
+
+2. You collected the data in `y` on Day 1, and `z` in Day 2. 
+   Make a data set to reflect that.
+
+```{r union_exercise, exercise = TRUE}
+FILL_THIS_IN(
+  mutate(y, day = "Day 1"),
+  mutate(z, day = "Day 2")
+)
+```
+
+```{r union_exercise-solution}
+union(
+  mutate(y, day = "Day 1"),
+  mutate(z, day = "Day 2")
+)
+```
+
+```{r union_exercise-check, echo = FALSE}
+grade_code()
+```
+
+3. The rows contained in `z` are bad! Remove those rows from `y`.
+
+```{r setdiff_exercise, exercise = TRUE}
+FILL_THIS_IN(FILL_THIS_IN, FILL_THIS_IN)
+```
+
+```{r setdiff_exercise-solution}
+setdiff(y, z)
+```
+
+```{r setdiff_exercise-check, echo=FALSE}
+grade_code()
+```
 
 
 ## Resources
