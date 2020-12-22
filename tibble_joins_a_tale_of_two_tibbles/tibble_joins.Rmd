@@ -1,6 +1,8 @@
 ---
 title: "Tibble Joins: A Tale of Two Tibbles"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    progressive: true
 runtime: shiny_prerendered
 ---
 
@@ -23,8 +25,8 @@ verify or filter data in one data table against another, etc.
 You can find a worksheet template for today [here](https://raw.githubusercontent.com/USF-Psych-DataSci/Classroom/master/tutorials/s07_tibble-join-exercise.Rmd).
 
 ```{r}
-fam_data <- read.csv("https://raw.githubusercontent.com/wesley4546/teach-r-temp/master/data/family_data.csv?token=ANSE7O4LLSHB3RH7IFICDFK7ZVXLC")
-fam_long_data <- read.csv("https://raw.githubusercontent.com/wesley4546/teach-r-temp/master/data/family_long_data.csv?token=ANSE7O5METBJEZG6MGXP4DS7ZVXM6")
+fam_data <- read.csv("https://raw.githubusercontent.com/wesley4546/teach-r-temp/master/data/family_data.csv")
+fam_long_data <- read.csv("https://raw.githubusercontent.com/wesley4546/teach-r-temp/master/data/family_long_data.csv")
 ```
 
 ## Requirements

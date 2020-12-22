@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<meta name="progressive" content="true" />
+<meta name="allow-skip" content="false" />
+
+<title>Tutorial</title>
+
+
+<!-- highlightjs -->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+<!-- taken from https://github.com/rstudio/rmarkdown/blob/67b7f5fc779e4cfdfd0f021d3d7745b6b6e17149/inst/rmd/h/default.html#L296-L362 -->
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("section-TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+<!-- end tabsets -->
+
+
+
+</head>
+
+<body>
+
+
+
+<div class="pageContent band">
+<div class="bandContent page">
+
+<div class="topics">
+
+<div id="section-file-inputoutput-io" class="section level1">
+<h1>File input/output (I/O)</h1>
+<p>Today’s class is all about reading into R and writing out data files out of R.</p>
+<p>Because sometimes you want to work with your own damn data, instead of data about flowers, cars, life expectancy, or the Big Five personality scores of 2800 of your closest friends.</p>
+<div id="section-worksheet" class="section level2">
+<h2>Worksheet</h2>
+<p>Normally there would be a separate worksheet file, but we’ll do everything in-line in the guide for this class.</p>
+</div>
+<div id="section-resources" class="section level2">
+<h2>Resources</h2>
+<div id="section-references-and-tutorials" class="section level3">
+<h3>References and tutorials</h3>
+<ul>
+<li>Jenny Bryan’s <a href="https://stat545.com/import-export.html">notes</a> on file I/O</li>
+<li><a href="https://beanumber.github.io/sds192/lab-import.html#data_from_an_excel_file">Tutorial</a> on importing Excel files</li>
+<li><a href="http://jenrichmond.rbind.io/post/how-to-use-the-here-package/">Tutorial</a> on relative paths and how RStudio treats .R script files and .Rmd files</li>
+</ul>
+</div>
+<div id="section-package-documentation" class="section level3">
+<h3>Package documentation</h3>
+<ul>
+<li><a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_csv()</a></li>
+<li><a href="https://readxl.tidyverse.org/reference/read_excel.html">readxl::read_excel()</a></li>
+<li><a href="https://googlesheets4.tidyverse.org/reference/read_sheet.html">googlesheets4::read_sheet()</a></li>
+<li><a href="https://haven.tidyverse.org/">haven</a> package for importing SPSS, SAS, Stata files</li>
+<li><a href="https://cloud.r-project.org/web/packages/rio/vignettes/rio.html">rio::import()</a> for importing all manner of formats with one command!</li>
+<li><a href="https://here.r-lib.org">here::here()</a></li>
+</ul>
+</div>
+</div>
+<div id="section-writing-data-to-disk" class="section level2">
+<h2>Writing data to disk</h2>
+<p>Let’s first load the built-in gapminder dataset and the tidyverse:</p>
+<p>Next, let’s filter the data to only 2007 and only the Asia continent and save it to a new object.</p>
+<pre class="r"><code>(gap_asia_2007 &lt;- gapminder %&gt;% filter(year == 2007, continent == &quot;Asia&quot;))</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["country"],"name":[1],"type":["fct"],"align":["left"]},{"label":["continent"],"name":[2],"type":["fct"],"align":["left"]},{"label":["year"],"name":[3],"type":["int"],"align":["right"]},{"label":["lifeExp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["pop"],"name":[5],"type":["int"],"align":["right"]},{"label":["gdpPercap"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"Asia","3":"2007","4":"43.828","5":"31889923","6":"974.5803"},{"1":"Bahrain","2":"Asia","3":"2007","4":"75.635","5":"708573","6":"29796.0483"},{"1":"Bangladesh","2":"Asia","3":"2007","4":"64.062","5":"150448339","6":"1391.2538"},{"1":"Cambodia","2":"Asia","3":"2007","4":"59.723","5":"14131858","6":"1713.7787"},{"1":"China","2":"Asia","3":"2007","4":"72.961","5":"1318683096","6":"4959.1149"},{"1":"Hong Kong, China","2":"Asia","3":"2007","4":"82.208","5":"6980412","6":"39724.9787"},{"1":"India","2":"Asia","3":"2007","4":"64.698","5":"1110396331","6":"2452.2104"},{"1":"Indonesia","2":"Asia","3":"2007","4":"70.650","5":"223547000","6":"3540.6516"},{"1":"Iran","2":"Asia","3":"2007","4":"70.964","5":"69453570","6":"11605.7145"},{"1":"Iraq","2":"Asia","3":"2007","4":"59.545","5":"27499638","6":"4471.0619"},{"1":"Israel","2":"Asia","3":"2007","4":"80.745","5":"6426679","6":"25523.2771"},{"1":"Japan","2":"Asia","3":"2007","4":"82.603","5":"127467972","6":"31656.0681"},{"1":"Jordan","2":"Asia","3":"2007","4":"72.535","5":"6053193","6":"4519.4612"},{"1":"Korea, Dem. Rep.","2":"Asia","3":"2007","4":"67.297","5":"23301725","6":"1593.0655"},{"1":"Korea, Rep.","2":"Asia","3":"2007","4":"78.623","5":"49044790","6":"23348.1397"},{"1":"Kuwait","2":"Asia","3":"2007","4":"77.588","5":"2505559","6":"47306.9898"},{"1":"Lebanon","2":"Asia","3":"2007","4":"71.993","5":"3921278","6":"10461.0587"},{"1":"Malaysia","2":"Asia","3":"2007","4":"74.241","5":"24821286","6":"12451.6558"},{"1":"Mongolia","2":"Asia","3":"2007","4":"66.803","5":"2874127","6":"3095.7723"},{"1":"Myanmar","2":"Asia","3":"2007","4":"62.069","5":"47761980","6":"944.0000"},{"1":"Nepal","2":"Asia","3":"2007","4":"63.785","5":"28901790","6":"1091.3598"},{"1":"Oman","2":"Asia","3":"2007","4":"75.640","5":"3204897","6":"22316.1929"},{"1":"Pakistan","2":"Asia","3":"2007","4":"65.483","5":"169270617","6":"2605.9476"},{"1":"Philippines","2":"Asia","3":"2007","4":"71.688","5":"91077287","6":"3190.4810"},{"1":"Saudi Arabia","2":"Asia","3":"2007","4":"72.777","5":"27601038","6":"21654.8319"},{"1":"Singapore","2":"Asia","3":"2007","4":"79.972","5":"4553009","6":"47143.1796"},{"1":"Sri Lanka","2":"Asia","3":"2007","4":"72.396","5":"20378239","6":"3970.0954"},{"1":"Syria","2":"Asia","3":"2007","4":"74.143","5":"19314747","6":"4184.5481"},{"1":"Taiwan","2":"Asia","3":"2007","4":"78.400","5":"23174294","6":"28718.2768"},{"1":"Thailand","2":"Asia","3":"2007","4":"70.616","5":"65068149","6":"7458.3963"},{"1":"Vietnam","2":"Asia","3":"2007","4":"74.249","5":"85262356","6":"2441.5764"},{"1":"West Bank and Gaza","2":"Asia","3":"2007","4":"73.422","5":"4018332","6":"3025.3498"},{"1":"Yemen, Rep.","2":"Asia","3":"2007","4":"62.698","5":"22211743","6":"2280.7699"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>We can write this to a comma-separated value (csv) file with just one command:</p>
+<pre><code>write_csv(gap_asia_2007, &quot;exported_file.csv&quot;)</code></pre>
+<p>Try writing a csv named “<code>gapminder_asia_2007.csv</code>”:</p>
+<div class="tutorial-exercise" data-label="write_csv_exercise" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="write_csv_exercise-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>write_csv(gap_asia_2007, &quot;gapminder_asia_2007.csv&quot;)</code></pre>
+</div>
+<p>But where did this file go? We should save the file in a sensible location. We need to practice controlling where R is running, where it looks for files, and where it writes out your files. To that end, let’s talk about the working directory and RStudio Projects.</p>
+</div>
+<div id="section-the-working-directory-and-rstudio-projects" class="section level2">
+<h2>The working directory and RStudio Projects</h2>
+<p>When you open, it “runs” in some folder on your computer. This is the place it will look for files to import and write files as output. Think about where your participation and homework files end up when you knit them.</p>
+<p>If you have R/RStudio closed, and you open a .R or .Rmd file, R/RStudio will start in the folder holding that file.</p>
+<p>If you open R/RStudio from the Windows Start menu, the Mac dock, the Mac Spotlight, etc., R/Studio will start in its default location (probably your user home directory, see Tools → Global Options → General → Default working directory…).</p>
+<div id="section-the-working-directory" class="section level3">
+<h3>The working directory</h3>
+<p>When I say “R/Studio will start in…”, what I am referring to is R’s “working directory”. Like I say above, this is the place R will look for files to import and write files as output. You can check what R’s current working directory is using the <code>getwd()</code> function:</p>
+<pre class="r"><code>getwd()</code></pre>
+<pre><code>## [1] &quot;C:/Users/Wesley/Documents/GitHub/teach-r-temp/file_input_output&quot;</code></pre>
+<p>You can also change the working directory using the <code>setwd()</code> function:</p>
+<pre class="r"><code>setwd(file.path(&quot;path&quot;, &quot;to&quot;, &quot;folder&quot;))</code></pre>
+<p>Do not use <code>setwd()</code>! You should always write your R scripts so that the entire project is self-contained in a folder. All of the scripts, folders, data, output, etc. should all “live” within this project folder.</p>
+<p>Write all of your R scripts assuming:</p>
+<ol style="list-style-type: decimal">
+<li>You are running them by opening a fresh new R session
+<ul>
+<li>Don’t use <code>rm(list = ls())</code> to clean the workspace–the workspace is already clean</li>
+<li>You need to load required pacakges with <code>library()</code></li>
+<li>Don’t work on several different projects in one R session at the same time!</li>
+</ul></li>
+<li>You have all of the necessary packages installed
+<ul>
+<li>Don’t include <code>install.packages()</code> calls unless they are commented out or otherwise set not to run</li>
+</ul></li>
+<li>The script will run without human input
+<ul>
+<li>You need to import or load any data you are working with</li>
+<li>Load data and write output using R commands, not <code>file.choose()</code>, <code>read.clipboard()</code>, the buttons in RStudio, etc.</li>
+</ul></li>
+<li>All of the needed files live in your project folder
+<ul>
+<li>Write <em>relative</em> paths, rather than <em>absolute</em> paths</li>
+<li><code>data/cats-data_2020-03-04.xlsx</code> or <code>file.path("data", "cats-data_2020-03-04.xlsx")</code></li>
+<li>Not: <code>/Users/brenton/Research/cats_project/data/cats-data_2020-03-04.xlsx</code> or <code>C:\\Users\\brenton\\Research\\cats_project\\data\\cats-data_2020-03-04.xlsx</code><br />
+or<code>file.path("C:", "Users", "brenton", "Research", "cats_project", "data", "cats-data_2020-03-04.xlsx")</code></li>
+</ul></li>
+<li>Your script might run on any system
+<ul>
+<li>Write the paths to files using <code>file.path()</code> or <code>here::here()</code>, rather than typing out the whole path (Windows and Mac/Linux have different syntaxes for file paths):
+<ul>
+<li>Mac/Linux: <code>path/to/folder</code></li>
+<li>Windows: <code>path\\to\\folder</code></li>
+</ul></li>
+</ul></li>
+</ol>
+<p>This approach has several advantages:</p>
+<ol style="list-style-type: decimal">
+<li>Frictionless running on different computers</li>
+<li>Less breakage (e.g., if you move a folder around, the relative paths will still work)</li>
+<li>Less surprising or weird behaviors due to session crud</li>
+<li>Easy to tweak data/code and update results</li>
+</ol>
+</div>
+<div id="section-rstudio-projects" class="section level3">
+<h3>RStudio projects</h3>
+<p>RStudio projects can help with following these best practices. Let’s make a project.</p>
+<p>Click <code>File → New Project…</code> and then make a new project in your participation repo folder. Give it a useful name like <code>DataSci-participation.Rproj</code>.</p>
+<p>When you double click on a .Rproj file, it: 1. Opens a new fresh R session, with 2. The working directory set to the location of the .Rproj file, and 3. No connection whatsoever to any other R sessions you already have open</p>
+<p>You can also set specfic options for each RStudio project (e.g., number of spaces to insert when you type Tab, etc.).</p>
+<p>Let’s practice closing RStudio and re-opening it by opening the RStudio project. Run <code>getwd()</code> to see where R is running.</p>
+</div>
+</div>
+<div id="section-herehere" class="section level2">
+<h2>here::here()</h2>
+<p>You can make your projects very portable by using .Rproj RStudio projects and relative paths with <code>file.path()</code>. This still can be a little fiddly:</p>
+<ol style="list-style-type: decimal">
+<li>Need to remember to open the .Rproj file, not a .Rmd or .R file</li>
+<li>If you open a .Rmd file contained in a subfolder, the working directory won’t be right for working with <code>file.choose()</code> for relative paths.</li>
+</ol>
+<p>Enter the <code>here</code> package. <code>here</code> takes the idea of relative paths and extends it in very useful ways.</p>
+<p>The major function is <code>here::here()</code>. Like <code>file.path()</code>, <code>here::here()</code> lets you specify a path to a file and then adds the system-appropriate separators (<code>/</code> or <code>\\</code>). Where <code>here::here()</code> shines is that it figures out better where the relative paths should start from. It looks round in the folders in your directory and finds the .Rproj file, then constructs the relative file paths from there.</p>
+<p>For example, create a new folder “data” in your participation repo, and within it make a subfolder called “s008_data”. Then, save <code>gap_asia_2007</code> using the <code>here::here()</code> and <code>write_csv()</code> functions:</p>
+<pre class="r"><code>write_csv(gap_asia_2007, here::here(&quot;data&quot;, &quot;s008_data&quot;, &quot;exported_file.csv&quot;))</code></pre>
+<p>More details on <code>here</code> are available in this <a href="http://jenrichmond.rbind.io/post/how-to-use-the-here-package/">short article</a>.</p>
+</div>
+<div id="section-reading-data-from-disk" class="section level2">
+<h2>Reading data from disk</h2>
+<p>The same csv file that we just saved to disk can be imported into R again by specifying the path where it exists:</p>
+<pre class="r"><code>read_csv(here::here(&quot;data&quot;, &quot;s008_data&quot;, &quot;exported_file.csv&quot;))</code></pre>
+<p>Normally we would store the imported data into a new object that you can use in subsequent analyses using the assignment function <code>&lt;-</code>.</p>
+<p>Notice that the output of the imported file is the same as the original tibble, and <code>read_csv()</code> was intelligent enough to detect the types of the columns. This won’t always be true so it’s worth checking! The <a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv package</a> has many additional options including the ability to specify column types (e.g., is “1990” a year or a number?), skip columns, skip rows, rename columns on import, trim whitespace, and more.</p>
+<p>One of the most important options to set is the <code>na</code> argument, which specifies what values to treat as <code>NA</code> on import. By default, <code>read_csv()</code> treats blank cells (i.e., <code>""</code>) and cells with <code>"NA"</code> as missing. You might need to change this (e.g., if missing values are entered as <code>-999</code>). Note that <code>readxl::read_excel()</code> by default only has <code>na = c("")</code> (no <code>"NA"</code>)!</p>
+</div>
+<div id="section-import-a-file-from-the-webcloud" class="section level2">
+<h2>Import a file from the web/cloud</h2>
+<div id="section-import-a-csv-file-from-the-internet" class="section level3">
+<h3>Import a CSV file from the internet</h3>
+<p>To import a CSV file from a web, assign the URL to a variable</p>
+<pre class="r"><code>url &lt;- &quot;http://gattonweb.uky.edu/sheather/book/docs/datasets/magazines.csv&quot;</code></pre>
+<p>and then apply read_csv file to the <code>url</code>.</p>
+<pre class="r"><code>read_csv(url)</code></pre>
+<pre><code>## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   Magazine = col_character(),
+##   AdRevenue = col_double(),
+##   AdPages = col_double(),
+##   SubRevenue = col_double(),
+##   NewsRevenue = col_double()
+## )</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Magazine"],"name":[1],"type":["chr"],"align":["left"]},{"label":["AdRevenue"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AdPages"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["SubRevenue"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["NewsRevenue"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Weekly World News","2":"2280","3":"300.00","4":"854","5":"16568"},{"1":"National Examiner","2":"3382","3":"380.00","4":"968","5":"27215"},{"1":"J-14","2":"4218","3":"250.00","4":"2206","5":"12453"},{"1":"Soap Opera Weekly","2":"4622","3":"439.00","4":"5555","5":"24282"},{"1":"Easyriders","2":"5121","3":"523.69","4":"4155","5":"9929"},{"1":"Mary Engelbreit's Home Companion","2":"5259","3":"189.00","4":"9048","5":"4363"},{"1":"Official Xbox Magazine","2":"5838","3":"541.66","4":"4311","5":"10320"},{"1":"Weight Watchers","2":"6986","3":"287.27","4":"9202","5":"4048"},{"1":"Globe","2":"7634","3":"380.00","4":"2180","5":"63771"},{"1":"PSM: 100% Independent PlayStation 2 Magazine","2":"8034","3":"720.11","4":"6846","5":"5271"},{"1":"PC Gamer","2":"8154","3":"905.68","4":"6028","5":"12508"},{"1":"Saveur","2":"8582","3":"306.33","4":"9621","5":"2299"},{"1":"Yankee","2":"9353","3":"496.09","4":"11427","5":"1136"},{"1":"Diabetes Forecast","2":"9441","3":"666.35","4":"11306","5":"519"},{"1":"Guns & Ammo","2":"9551","3":"414.19","4":"10602","5":"2576"},{"1":"Fine Homebuilding","2":"9683","3":"521.78","4":"7117","5":"6307"},{"1":"Organic Style","2":"10147","3":"254.41","4":"9016","5":"1490"},{"1":"Country Weekly","2":"10611","3":"720.70","4":"5983","5":"20947"},{"1":"Billboard","2":"11042","3":"1181.00","4":"7758","5":"1584"},{"1":"Honey","2":"11613","3":"553.00","4":"5467","5":"1454"},{"1":"Computer Gaming World","2":"11787","3":"681.26","4":"4376","5":"4413"},{"1":"Wood","2":"12102","3":"342.30","4":"14345","5":"3082"},{"1":"Fit Pregnancy","2":"13010","3":"536.75","4":"5352","5":"3311"},{"1":"Windows & .NET Magazine","2":"13286","3":"833.75","4":"4225","5":"1571"},{"1":"Arthur Frommer's Budget Travel","2":"13310","3":"527.69","4":"6875","5":"1334"},{"1":"Veranda","2":"13431","3":"644.90","4":"6098","5":"4892"},{"1":"Four Wheeler","2":"13959","3":"1016.33","4":"4273","5":"4602"},{"1":"Bassmaster","2":"14165","3":"419.83","4":"11173","5":"284"},{"1":"Scientific American","2":"14294","3":"291.92","4":"19206","5":"9227"},{"1":"Nick Jr.","2":"14385","3":"299.01","4":"6588","5":"326"},{"1":"Backpacker","2":"14422","3":"451.65","4":"6594","5":"1945"},{"1":"Crain's Chicago Business","2":"14781","3":"1120.00","4":"3737","5":"206"},{"1":"Disney Adventures","2":"15603","3":"287.84","4":"11200","5":"5976"},{"1":"Woman's World","2":"15613","3":"337.00","4":"5555","5":"119972"},{"1":"Harvard Business Review","2":"15630","3":"455.41","4":"27064","5":"3800"},{"1":"Discover","2":"15864","3":"273.53","4":"27612","5":"7553"},{"1":"National Geographic Adventure","2":"15884","3":"532.00","4":"4006","5":"1667"},{"1":"Adweek*","2":"15917","3":"1088.00","4":"4229","5":"105"},{"1":"Transworld Snowboarding","2":"17120","3":"1377.32","4":"1339","5":"1591"},{"1":"Biography","2":"17351","3":"352.54","4":"14355","5":"2475"},{"1":"Official U.S. Playstation Magazine","2":"17868","3":"891.27","4":"6121","5":"18711"},{"1":"Crain's New York Business","2":"18041","3":"1040.00","4":"1806","5":"107"},{"1":"National Geographic Traveler","2":"18052","3":"454.28","4":"12280","5":"1475"},{"1":"Petersen's Photographic","2":"18090","3":"1041.14","4":"4266","5":"1064"},{"1":"Variety* (weekly)","2":"18254","3":"1525.17","4":"7594","5":"1229"},{"1":"Cigar Aficionado","2":"18436","3":"900.00","4":"3934","5":"1599"},{"1":"Flex","2":"18522","3":"2288.85","4":"1702","5":"7313"},{"1":"Flying","2":"18706","3":"778.33","4":"7177","5":"1301"},{"1":"Dirt Rider","2":"18708","3":"1553.18","4":"1735","5":"1810"},{"1":"Builder","2":"18748","3":"2200.12","4":"944","5":"12"},{"1":"Cruising World","2":"18795","3":"1184.39","4":"3978","5":"849"},{"1":"Working Mother","2":"19814","3":"414.41","4":"7579","5":"90"},{"1":"Outdoor Life","2":"20293","3":"436.41","4":"15863","5":"1016"},{"1":"Petersen's 4-Wheel & Off Road","2":"20692","3":"1156.60","4":"5786","5":"5018"},{"1":"Wine Spectator","2":"20734","3":"950.00","4":"13817","5":"4194"},{"1":"Southern Accents","2":"20787","3":"694.15","4":"8776","5":"2899"},{"1":"Robb Report","2":"20834","3":"1146.28","4":"3708","5":"4748"},{"1":"GamePro","2":"21033","3":"1152.00","4":"9385","5":"10196"},{"1":"Yachting","2":"21269","3":"2135.70","4":"2571","5":"521"},{"1":"Premiere","2":"21290","3":"412.81","4":"8494","5":"3120"},{"1":"Coastal Living","2":"21363","3":"674.82","4":"7437","5":"2458"},{"1":"Sports Illustrated For Kids","2":"21715","3":"353.19","4":"21301","5":"1683"},{"1":"First For Women","2":"21883","3":"573.00","4":"4534","5":"39539"},{"1":"Penthouse","2":"22656","3":"481.37","4":"9430","5":"31169"},{"1":"Nickelodeon","2":"22715","3":"408.40","4":"18236","5":"3774"},{"1":"Texas Monthly","2":"22784","3":"1482.20","4":"4860","5":"1568"},{"1":"Runner's World","2":"23473","3":"458.01","4":"10826","5":"3804"},{"1":"Macworld","2":"23957","3":"770.64","4":"11464","5":"3742"},{"1":"Skiing","2":"24117","3":"637.35","4":"5772","5":"634"},{"1":"People en Espanol","2":"24483","3":"670.19","4":"4409","5":"3984"},{"1":"The Atlantic Monthly","2":"25253","3":"531.99","4":"9395","5":"2916"},{"1":"Architectural Record","2":"25554","3":"1645.21","4":"6490","5":"380"},{"1":"Transworld Skateboarding","2":"26263","3":"2884.59","4":"2002","5":"3908"},{"1":"Electronic Gaming Monthly","2":"26507","3":"1387.70","4":"9485","5":"8888"},{"1":"T & L Golf","2":"26664","3":"526.04","4":"10533","5":"1743"},{"1":"Details","2":"26750","3":"831.31","4":"5172","5":"2096"},{"1":"Wired","2":"27248","3":"839.00","4":"11264","5":"3692"},{"1":"Jet","2":"28230","3":"1047.00","4":"30317","5":"9644"},{"1":"Hot Rod","2":"28736","3":"649.05","4":"11134","5":"4342"},{"1":"Tennis Magazine","2":"29580","3":"475.97","4":"12595","5":"583"},{"1":"The Sporting News","2":"29690","3":"741.43","4":"49206","5":"4358"},{"1":"More","2":"30910","3":"562.21","4":"13497","5":"4333"},{"1":"The Source","2":"31394","3":"1187.90","4":"2313","5":"17787"},{"1":"Star Magazine","2":"34132","3":"825.52","4":"15002","5":"129810"},{"1":"Ski","2":"34212","3":"868.57","4":"6467","5":"761"},{"1":"Business 2.0","2":"34295","3":"691.70","4":"16243","5":"1099"},{"1":"Advertising Age","2":"34315","3":"1284.65","4":"7445","5":"259"},{"1":"Spin","2":"34773","3":"769.07","4":"5402","5":"3573"},{"1":"Jane","2":"35481","3":"843.90","4":"10691","5":"4278"},{"1":"Cycle World","2":"35611","3":"1041.18","4":"5423","5":"3798"},{"1":"Black Enterprise","2":"35640","3":"987.05","4":"9661","5":"1363"},{"1":"Metropolitan Home","2":"36934","3":"616.27","4":"9951","5":"2743"},{"1":"Men's Fitness","2":"37864","3":"810.37","4":"12821","5":"4480"},{"1":"Sound & Vision","2":"38198","3":"644.01","4":"10074","5":"1287"},{"1":"Boating","2":"38384","3":"1248.31","4":"5048","5":"1419"},{"1":"Family Handyman","2":"39432","3":"590.11","4":"21477","5":"3249"},{"1":"Soap Opera Digest","2":"39716","3":"1369.04","4":"51072","5":"36002"},{"1":"Lucky","2":"39831","3":"1012.70","4":"7086","5":"8061"},{"1":"Kiplinger's Personal Finance Magazine","2":"41680","3":"597.93","4":"23812","5":"1286"},{"1":"CosmoGirl","2":"43233","3":"683.39","4":"10196","5":"11626"},{"1":"Midwest Living","2":"44088","3":"729.03","4":"14976","5":"1924"},{"1":"Popular Science","2":"44591","3":"630.28","4":"26595","5":"7318"},{"1":"SmartMoney","2":"45474","3":"747.55","4":"18078","5":"2331"},{"1":"Computer Shopper","2":"45540","3":"1554.82","4":"10298","5":"5501"},{"1":"Elle Decor","2":"47129","3":"1021.88","4":"10353","5":"3673"},{"1":"Barron's","2":"47325","3":"1608.24","4":"30821","5":"14816"},{"1":"Fast Company","2":"47548","3":"805.27","4":"17043","5":"1356"},{"1":"Entrepreneur","2":"47988","3":"1332.25","4":"10263","5":"2006"},{"1":"The National Enquirer","2":"48180","3":"1004.49","4":"21012","5":"163193"},{"1":"Home","2":"48291","3":"681.70","4":"22877","5":"2235"},{"1":"House & Garden","2":"48735","3":"1003.25","4":"15566","5":"3864"},{"1":"Stuff","2":"49324","3":"756.54","4":"7217","5":"19469"},{"1":"Men's Journal","2":"51408","3":"921.51","4":"10121","5":"4481"},{"1":"This Old House","2":"52089","3":"896.13","4":"17184","5":"3567"},{"1":"Child","2":"52447","3":"814.70","4":"11895","5":"694"},{"1":"Real Simple","2":"53227","3":"878.62","4":"16063","5":"13246"},{"1":"Field & Stream","2":"53541","3":"614.38","4":"24271","5":"1161"},{"1":"Bridal Guide","2":"54137","3":"2315.66","4":"805","5":"6382"},{"1":"FHM","2":"54490","3":"839.23","4":"9306","5":"19289"},{"1":"Outside","2":"54909","3":"878.72","4":"10552","5":"2831"},{"1":"Smithsonian","2":"58264","3":"607.98","4":"57065","5":"355"},{"1":"National Geographic","2":"60640","3":"394.24","4":"198002","5":"16053"},{"1":"Ebony","2":"61923","3":"1107.40","4":"35074","5":"8165"},{"1":"Gourmet","2":"62020","3":"1241.11","4":"16892","5":"4803"},{"1":"Automobile Magazine","2":"62755","3":"851.86","4":"11295","5":"3728"},{"1":"Muscle & Fitness","2":"63096","3":"1775.11","4":"7471","5":"14146"},{"1":"Traditional Home","2":"63577","3":"772.64","4":"14021","5":"8507"},{"1":"Esquire","2":"64702","3":"892.17","4":"10311","5":"3360"},{"1":"Food & Wine","2":"65500","3":"1226.15","4":"30684","5":"3558"},{"1":"Essence","2":"66160","3":"1178.35","4":"17918","5":"8870"},{"1":"Popular Mechanics","2":"66196","3":"821.15","4":"20871","5":"7353"},{"1":"Us Weekly","2":"66336","3":"1069.30","4":"38744","5":"66438"},{"1":"Health","2":"66361","3":"975.93","4":"24629","5":"4376"},{"1":"Family Fun","2":"68269","3":"719.21","4":"22386","5":"1311"},{"1":"Allure","2":"70357","3":"1194.70","4":"9810","5":"10609"},{"1":"New York","2":"71376","3":"2512.36","4":"17179","5":"3277"},{"1":"Inc.","2":"72160","3":"868.87","4":"12727","5":"699"},{"1":"PC World","2":"72522","3":"1297.00","4":"24454","5":"10142"},{"1":"Playboy","2":"72612","3":"583.72","4":"85690","5":"21224"},{"1":"Road & Track","2":"73312","3":"1190.22","4":"13814","5":"7439"},{"1":"Conde Nast Traveler","2":"74030","3":"1371.03","4":"14841","5":"1530"},{"1":"Bon Appetit","2":"75512","3":"1131.70","4":"22465","5":"8373"},{"1":"Teen People","2":"76829","3":"1004.70","4":"17427","5":"15306"},{"1":"Popular Photography","2":"77453","3":"1668.86","4":"8382","5":"1568"},{"1":"Cooking Light","2":"77538","3":"1257.82","4":"28446","5":"12342"},{"1":"Vibe","2":"78434","3":"1175.01","4":"7775","5":"7038"},{"1":"Fitness","2":"78908","3":"988.47","4":"18754","5":"13220"},{"1":"Modern Bride","2":"80715","3":"2428.52","4":"1932","5":"8260"},{"1":"Sunset","2":"81944","3":"1066.63","4":"32438","5":"6768"},{"1":"Self","2":"84921","3":"1146.51","4":"14913","5":"14378"},{"1":"Town & Country","2":"85199","3":"1619.15","4":"8859","5":"2976"},{"1":"Architectural Digest","2":"88365","3":"1716.23","4":"27747","5":"9828"},{"1":"Shape","2":"88815","3":"989.09","4":"27368","5":"19063"},{"1":"House Beautiful","2":"90012","3":"1039.56","4":"14953","5":"5929"},{"1":"Men's Health","2":"92433","3":"847.83","4":"31299","5":"17579"},{"1":"Prevention","2":"92914","3":"990.92","4":"61057","5":"13307"},{"1":"Golf Digest","2":"94736","3":"1429.38","4":"39544","5":"7142"},{"1":"Bride's Magazine","2":"96367","3":"2805.44","4":"1767","5":"7114"},{"1":"Country Home","2":"98231","3":"864.39","4":"19705","5":"9252"},{"1":"Harper's Bazaar","2":"99841","3":"1436.15","4":"9964","5":"6721"},{"1":"Travel & Leisure","2":"100160","3":"1508.65","4":"36219","5":"1841"},{"1":"YM","2":"100208","3":"1017.37","4":"39491","5":"15730"},{"1":"W","2":"102536","3":"1858.48","4":"12318","5":"2475"},{"1":"GQ","2":"104169","3":"1753.07","4":"11821","5":"7654"},{"1":"Elle","2":"108508","3":"1534.35","4":"20136","5":"11823"},{"1":"Country Living","2":"110147","3":"1121.05","4":"30787","5":"15019"},{"1":"Motor Trend","2":"110505","3":"919.29","4":"20390","5":"7206"},{"1":"Marie Claire","2":"110900","3":"1626.80","4":"6265","5":"21065"},{"1":"Car & Driver","2":"115681","3":"1096.60","4":"26762","5":"8013"},{"1":"Seventeen","2":"120826","3":"1342.12","4":"41713","5":"17632"},{"1":"The New Yorker","2":"123925","3":"2231.48","4":"44491","5":"8045"},{"1":"Redbook","2":"127944","3":"1262.79","4":"29028","5":"17296"},{"1":"Money","2":"131234","3":"919.18","4":"74683","5":"6236"},{"1":"Parenting","2":"133532","3":"1150.45","4":"31039","5":"2201"},{"1":"Vanity Fair","2":"139555","3":"1968.43","4":"17597","5":"19053"},{"1":"Golf Magazine","2":"145163","3":"1359.10","4":"26004","5":"5102"},{"1":"Parents","2":"151361","3":"1448.26","4":"31954","5":"3870"},{"1":"Southern Living","2":"156591","3":"1491.05","4":"83137","5":"16503"},{"1":"Rolling Stone","2":"159223","3":"1530.35","4":"21189","5":"15384"},{"1":"Glamour","2":"159288","3":"1541.17","4":"21453","5":"40460"},{"1":"PC Magazine","2":"165554","3":"2054.45","4":"47044","5":"7065"},{"1":"ESPN The Magazine","2":"168870","3":"1458.70","4":"39191","5":"4440"},{"1":"O, The Oprah Magazine","2":"179079","3":"1426.13","4":"36983","5":"30266"},{"1":"Maxim","2":"179665","3":"1223.70","4":"29862","5":"40582"},{"1":"Vogue","2":"187789","3":"2889.96","4":"21448","5":"20655"},{"1":"U.S. News & World Report","2":"192803","3":"1415.00","4":"88705","5":"9886"},{"1":"Ladies' Home Journal","2":"200831","3":"1215.49","4":"63585","5":"10592"},{"1":"Entertainment Weekly","2":"217285","3":"1864.01","4":"94675","5":"16092"},{"1":"Martha Stewart Living","2":"234363","3":"1887.14","4":"55123","5":"22267"},{"1":"Family Circle","2":"253921","3":"1330.15","4":"63059","5":"57825"},{"1":"In Style","2":"264471","3":"3030.54","4":"19576","5":"46522"},{"1":"Reader's Digest","2":"266856","3":"979.66","4":"315868","5":"23531"},{"1":"Woman's Day","2":"267277","3":"1502.50","4":"51997","5":"45780"},{"1":"Forbes","2":"281021","3":"3504.60","4":"53033","5":"5368"},{"1":"Cosmopolitan","2":"281640","3":"1854.38","4":"29761","5":"97134"},{"1":"Fortune","2":"293708","3":"3331.42","4":"48115","5":"8458"},{"1":"Good Housekeeping","2":"343254","3":"1527.76","4":"73899","5":"29700"},{"1":"BusinessWeek","2":"351561","3":"3333.13","4":"57332","5":"7916"},{"1":"TV Guide","2":"352073","3":"2457.94","4":"466572","5":"85884"},{"1":"Newsweek","2":"389329","3":"1979.10","4":"121527","5":"34272"},{"1":"Better Homes & Gardens","2":"554786","3":"1910.71","4":"138675","5":"11093"},{"1":"Time","2":"568993","3":"2350.60","4":"228279","5":"39094"},{"1":"Sports Illustrated","2":"644386","3":"2498.59","4":"258634","5":"16371"},{"1":"People","2":"713639","3":"3697.91","4":"236283","5":"249553"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>You try and read one in:</p>
+<p>Link = “<a href="http://gattonweb.uky.edu/sheather/book/docs/datasets/magazines.csv" class="uri">http://gattonweb.uky.edu/sheather/book/docs/datasets/magazines.csv</a>”</p>
+<div class="tutorial-exercise" data-label="read_csv_exercise" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="read_csv_exercise-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>read_csv(&quot;http://gattonweb.uky.edu/sheather/book/docs/datasets/magazines.csv&quot;)</code></pre>
+</div>
+<p>(This doesn’t work for all import functions, so I usually keep them separate as two steps.)</p>
+</div>
+<div id="section-import-an-excel-file-.xls-or-.xlsx-from-the-internet" class="section level3">
+<h3>Import an Excel file (.xls or .xlsx) from the internet</h3>
+<p>First, we’ll need the package to load in Excel files:</p>
+<pre class="r"><code>library(readxl) </code></pre>
+<p>Datafiles from this tutorial were obtained from: <a href="https://beanumber.github.io/sds192/lab-import.html#data_from_an_excel_file" class="uri">https://beanumber.github.io/sds192/lab-import.html#data_from_an_excel_file</a></p>
+<p>Unlike with a CSV file, tto import an .xls or .xlsx file from the internet, you first need to download it localy.</p>
+<p><strong>Note: The folder you want to save the file to <em>has to exist</em>!. If it doesn’t,</strong> <strong>you will get an error.</strong></p>
+<p>Either create the folder path in Finder/Windows Explorer, or use the <code>dir.create()</code> function:</p>
+<pre class="r"><code>dir.create(here::here(&quot;data&quot;, &quot;s008_data&quot;), recursive = TRUE)</code></pre>
+<p>Next, you download the file. To download it, create a new object called <code>xls_url</code> and then using <code>download.file</code> to dowload it to a specified destination path.</p>
+<pre class="r"><code>xls_url &lt;- &quot;http://gattonweb.uky.edu/sheather/book/docs/datasets/GreatestGivers.xls&quot;
+download.file(xls_url, here::here(&quot;data&quot;, &quot;s008_data&quot;, &quot;some_file.xls&quot;), mode = &quot;wb&quot;)</code></pre>
+<p><strong>NOTE: The <code>mode = "wb"</code> argument at the end is really important if you are on </strong> <strong>Windows. If you omit, you will probabbly get a message about downloading a </strong> <strong>corrupt file. More details about this behaviour can be found </strong> <strong><a href="https://github.com/HenrikBengtsson/Wishlist-for-R/issues/30">here</a>.</strong></p>
+<p>Naming a file “some_file” is extremely bad practice (hard to keep track of the files), and you should <strong>always</strong> give it a more descriptive name. Often, it’s a good idea to name the file similarly (or the same as) the original file (sometimes that might not be a good idea if the original name is non-descriptive).</p>
+<p>There’s handy trick to extract the filename from the URL:</p>
+<pre class="r"><code>file_name &lt;- basename(xls_url)
+download.file(xls_url, here::here(&quot;data&quot;, &quot;s008_data&quot;, file_name), mode = &quot;wb&quot;)</code></pre>
+<p>Now we can import the file:</p>
+<pre class="r"><code>read_excel(here::here(&quot;data&quot;, &quot;s008_data&quot;, file_name))</code></pre>
+</div>
+</div>
+<div id="section-read-in-a-sample-spss-file." class="section level2">
+<h2>Read in a sample SPSS file.</h2>
+<p>Let’s load a sample SPSS file and work with it. Download the file from <a href="https://raw.githubusercontent.com/USF-Psych-DataSci/Classroom/master/data/clevel.sav">here</a> and save it in your <code>data/s008_data</code> folder.</p>
+<p>These data are a random subset of the data used in <a href="https://doi.org/10.1016/j.jvb.2018.02.005">this paper</a>. This was a study looking at personality traits that distinguish C-level executives from lower-level managers among men and women.</p>
+<p>The subset of data here consists of 200 cases, with variables indicating: 1. The language of assessment (English, Dutch, or French) 2. Gender 3. C-level or not 4. Extraversion level, as well as 4 facet traits (Leading, Communion, Persuasive, Motivating)</p>
+<p>Let’s load in the data using the <code>haven</code> package.</p>
+<pre class="r"><code>(clevel &lt;- haven::read_spss(here::here(&quot;data&quot;, &quot;s008_data&quot;, &quot;clevel.sav&quot;)))</code></pre>
+<p>Notice that this tibble looks a little different for the <code>language</code> and <code>gender</code> variables than normal. It has <strong>labels</strong> for the numeric values. This format is what SPSS uses, but it’s not standard for R. Let’s convert those variables, and <code>isClevel</code> as well, to factors:</p>
+<pre class="r"><code>clevel_cleaned &lt;-
+  clevel %&gt;% 
+  mutate(language = as_factor(language),
+         gender = as_factor(gender),
+         isClevel = factor(isClevel, 
+                           levels = c(0, 1), 
+                           labels = c(&quot;No&quot;, &quot;Yes&quot;))
+  ) %&gt;% 
+  print()</code></pre>
+<p>Notice how the variables are now factors with labels as the entries, instead of the original code numbers.</p>
+<div id="section-saving-data-frames" class="section level3">
+<h3>Saving data frames</h3>
+<p>Let’s save this file as a CSV file so that it’s a smaller file and easier to import again in the future.</p>
+<pre class="r"><code>write_csv(clevel_cleaned, here::here(&quot;data&quot;, &quot;s008_data&quot;, &quot;clevel_cleaned.csv&quot;))</code></pre>
+</div>
+<div id="section-saving-plots" class="section level3">
+<h3>Saving plots</h3>
+<p>Now let’s make a plot.</p>
+<pre class="r"><code>clevel_plot &lt;-
+  clevel_cleaned %&gt;% 
+  mutate(isClevel = recode(isClevel, 
+                           No = &quot;Below C-level&quot;, 
+                           Yes = &quot;C-level&quot;),
+         gender = recode(gender,
+                         Female = &quot;Women&quot;,
+                         Male = &quot;Men&quot;)) %&gt;% 
+  ggplot(aes(paste(isClevel, gender, sep = &quot;\n&quot;), Extraversion, color = gender)) +
+  geom_boxplot() +
+  geom_jitter(height = .2) +
+  scale_color_manual(values = c(&quot;#1b9e77&quot;, &quot;#7570b3&quot;)) +
+  ggtitle(&quot;Extraversion Stan Scores&quot;) +
+  scale_y_continuous(breaks = 1:9) +
+  ggthemes::theme_fivethirtyeight() %&gt;% 
+  print()</code></pre>
+<p>Let’s save the plot in several formats. This is useful if we want to use the plot outside of Markdown. Save plots using the <code>ggsave()</code> funnction.</p>
+<p><code>ggsave()</code> has many options. See the help function <code>?ggsave</code> for full details. The main arguments are <code>filename</code>, <code>plot</code>, <code>width</code> and <code>height</code> (inches by default), and <code>dpi</code> (dots per inch; for bitmap formats).</p>
+<p><code>ggsave()</code> will try to guess what format you want based on the file name. If you want, you can specify a specific format or R graphics device to save with using the <code>device</code> argument.</p>
+<pre class="r"><code>dir.create(here::here(&quot;output&quot;, &quot;figures&quot;))
+ggsave(here::here(&quot;output&quot;, &quot;figures&quot;, &quot;clevel_extraversion.svg&quot;), clevel_plot)</code></pre>
+<p>You can save to several formats. Generally, work with a <em>vector</em> format like <code>.svg</code>, <code>.eps</code>, or <code>.pdf</code>. Vector graphics represent the image as a series of data points and equations. This means that they can be made smaller or larger or zoomed in on without damaging the image quality.</p>
+<p>If you can’t use a vector format for some reason, you can also export to a <em>bitmap</em> format. Bitmap graphs represent the image as colored dots or pixels. This means that the image quality will suffer if you make the image larger or zoom in on it (making it smaller can also sometimes compromise quality). With bitmap images, you need to be concerned with <em>resolution</em> (how many pixels/dots per inch when printed). Always use at least <strong>300 DPI</strong> resolution.</p>
+<p>There are several popular bitmap image formats. <code>.tiff</code>/<code>.tif</code> is the highest quality, but also the largest. Use it for print graphics, but you should probably avoid it for images to be hosted on the web. <code>.png</code> is a bit smaller, and it should be your go to for charts, figures, line drawings, etc. More complex images (e.g., photos) can get pretty big with <code>.png</code>, though. <code>.jpg</code>/<code>.jpeg</code> is probably the most popular bitmap format. It works well for photographs hosted on the web, but its compression often makes line drawing and charts look terrible. <code>.jpg</code>/<code>.jpeg</code> also degrades in quality each time you edit/save it, so don’t use it for images you intend to edit. Generally avoid <code>.gif</code> unless you are making an animation or you need very small file size for a simple image. <code>.gif</code> supports very few colors, so always check your image quality after making a <code>.gif</code>.</p>
+<p>Let’s save to some other formats:</p>
+<pre class="r"><code>ggsave(here::here(&quot;output&quot;, &quot;figures&quot;, &quot;clevel_extraversion.eps&quot;), clevel_plot)
+ggsave(here::here(&quot;output&quot;, &quot;figures&quot;, &quot;clevel_extraversion.pdf&quot;), clevel_plot)
+ggsave(here::here(&quot;output&quot;, &quot;figures&quot;, &quot;clevel_extraversion.tiff&quot;), clevel_plot)
+ggsave(here::here(&quot;output&quot;, &quot;figures&quot;, &quot;clevel_extraversion.png&quot;), clevel_plot)</code></pre>
+</div>
+</div>
+<div id="section-organizing-your-project-folders" class="section level2">
+<h2>Organizing your project folders</h2>
+<p>Follow a consistent folder structure for all of your projects. This will make it easier for you to say organized and make your code, data, and projects easy to share.</p>
+<p>In your project’s root folder, you should have a README.md file and a .Rproj project. Then, you should have folders that separate different types of files:</p>
+<ul>
+<li><code>data</code>: Stores all of your data files for a project
+<ul>
+<li>Have subfolders for different dates, waves, groups, etc. as needed</li>
+<li>If you plan on saving cleaned data, having separate <code>data-raw</code> and <code>data</code> folders is a good idea.</li>
+</ul></li>
+<li><code>markdown</code>: Stores your RMarkdown docuemnts.</li>
+<li><code>output</code>: Stores any output your scripts generate
+<ul>
+<li>Depending on how many figures and other output files you will create, you might want to split/subfolder this into <code>figures</code>, <code>reports</code>, etc.</li>
+</ul></li>
+</ul>
+<p>You might add additional folders, such as:</p>
+<ul>
+<li><code>tests</code>: A folder that includes tests to check that your scripts or results are accurate. Check out the <code>testthat</code> package.</li>
+<li><code>templates</code>: A folder to hold template files (e.g., RMarkdown templates, Word templates, CSS files for HTML output, TeX templates for PDF output)</li>
+<li><code>admin</code>: For adminstrative documents (e.g., IRB approval, grant information)</li>
+<li><code>doc</code>: For documentation (e.g., variable codebooks, style guides),</li>
+<li><code>scripts</code> or <code>src</code> or <code>R</code>: Folders to store functions and scripts that you call from your markdown (e.g., a data import and cleaning script)
+<ul>
+<li>Use folders for each language if you are programming in multiple languages: <code>R</code>, <code>python</code>, <code>sql</code>, <code>C</code>, etc.</li>
+<li>Can put them all in a generic <code>scripts</code> or <code>src</code> folder if not too many</li>
+</ul></li>
+</ul>
+</div>
+<div id="section-bonus-activity-rio" class="section level2">
+<h2>Bonus Activity: <code>rio</code></h2>
+Do the <code>clevel</code> activity again, but this time use the <code>rio::import()</code> and <code>rio::export()</code> functions instead of the <code>read_*()</code> and <code>write_*()</code> functions. In <code>rio::import()</code>, be sure to specify: <code>rio::import(..., setclass = "tibble")</code>. 
+<script type="application/shiny-prerendered" data-context="server-start">
+library(learnr)
+library(gradethis)
+gradethis_setup()
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::register_http_handlers(session, metadata = NULL)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::clear_exercise_setup_chunks()
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+session$onSessionEnded(function() {
+        learnr:::event_trigger(session, "session_stop")
+      })
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_setup_chunk("__setup__", c("library(learnr)", "library(gradethis)", "gradethis_setup()"
+), overwrite = FALSE)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_setup_chunk("__setup__", c("library(learnr)", "library(gradethis)", "gradethis_setup()"
+), overwrite = FALSE)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-write_csv_exercise-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-write_csv_exercise-code-editor`)), session)
+output$`tutorial-exercise-write_csv_exercise-output` <- renderUI({
+  `tutorial-exercise-write_csv_exercise-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache("write_csv_exercise", list(setup = NULL, chunks = list(list(label = "write_csv_exercise", 
+    code = "", opts = list(label = "\"write_csv_exercise\"", 
+        exercise = "TRUE"), engine = "r")), code_check = NULL, 
+    error_check = NULL, check = structure("grade_code()", chunk_opts = list(
+        label = "write_csv_exercise-check", echo = FALSE)), solution = structure("write_csv(gap_asia_2007, \"gapminder_asia_2007.csv\")", chunk_opts = list(
+        label = "write_csv_exercise-solution")), options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, strip.white = TRUE, size = "normalsize", 
+        background = "#F7F7F7", cache = 0, cache.path = "file_input_output_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "file_input_output_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, tutorial = TRUE, exercise.timelimit = 60, 
+        exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
+        exercise.error.check.code = "grade_code()", label = "write_csv_exercise", 
+        exercise = TRUE, code = "", out.width.px = 624, out.height.px = 384, 
+        params.src = "write_csv_exercise, exercise = TRUE", fig.num = 0L, 
+        exercise.df_print = "paged"), engine = "r"))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-read_csv_exercise-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-read_csv_exercise-code-editor`)), session)
+output$`tutorial-exercise-read_csv_exercise-output` <- renderUI({
+  `tutorial-exercise-read_csv_exercise-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache("read_csv_exercise", list(setup = NULL, chunks = list(list(label = "read_csv_exercise", 
+    code = "", opts = list(label = "\"read_csv_exercise\"", exercise = "TRUE"), 
+    engine = "r")), code_check = NULL, error_check = NULL, check = structure("grade_code()", chunk_opts = list(
+    label = "read_csv_exercise-check")), solution = structure("read_csv(\"http://gattonweb.uky.edu/sheather/book/docs/datasets/magazines.csv\")", chunk_opts = list(
+    label = "read_csv_exercise-solution")), options = list(eval = FALSE, 
+    echo = TRUE, results = "markup", tidy = FALSE, tidy.opts = NULL, 
+    collapse = FALSE, prompt = FALSE, comment = NA, highlight = FALSE, 
+    strip.white = TRUE, size = "normalsize", background = "#F7F7F7", 
+    cache = 0, cache.path = "file_input_output_cache/html/", 
+    cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+    cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+    fig.align = "default", fig.path = "file_input_output_files/figure-html/", 
+    dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+    fig.width = 6.5, fig.height = 4, fig.env = "figure", fig.cap = NULL, 
+    fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, fig.pos = "", 
+    out.width = 624, out.height = NULL, out.extra = NULL, fig.retina = 2, 
+    external = TRUE, sanitize = FALSE, interval = 1, aniopts = "controls,loop", 
+    warning = TRUE, error = FALSE, message = TRUE, render = NULL, 
+    ref.label = NULL, child = NULL, engine = "r", split = FALSE, 
+    include = TRUE, purl = TRUE, max.print = 1000, tutorial = TRUE, 
+    exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
+    exercise.error.check.code = "grade_code()", label = "read_csv_exercise", 
+    exercise = TRUE, code = "", out.width.px = 624, out.height.px = 384, 
+    params.src = "read_csv_exercise, exercise = TRUE", fig.num = 0L, 
+    exercise.df_print = "paged"), engine = "r"))
+</script>
+ <!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["header-attrs"]},{"type":"character","attributes":{},"value":["2.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pandoc"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["header-attrs.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1.9006"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9006"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1.9006"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9006"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1.9006"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9006"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.10.1.9006"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9006"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["anchor-sections"]},{"type":"character","attributes":{},"value":["1.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/anchor-sections"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["anchor-sections.js"]},{"type":"character","attributes":{},"value":["anchor-sections.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["5.1.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.css","css/v4-shims.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["4.4.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9006"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.10.1.9006"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1.9006"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9006"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1.9006"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9006"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1.9006"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9006"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9006"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9006"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9006"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9006"]}]}]}
+</script>
+<!--/html_preserve-->
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="execution_dependencies">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79]}},"value":[{"type":"character","attributes":{},"value":["assertthat","backports","base","broom","cellranger","cli","colorspace","compiler","crayon","curl","datasets","DBI","dbplyr","digest","dplyr","ellipsis","evaluate","fansi","fastmap","forcats","fs","gapminder","generics","ggplot2","glue","gradethis","graphics","grDevices","grid","gtable","haven","hms","htmltools","htmlwidgets","httpuv","httr","jsonlite","knitr","later","learnr","lifecycle","lubridate","magrittr","markdown","methods","mime","modelr","munsell","pillar","pkgconfig","promises","purrr","R6","Rcpp","readr","readxl","reprex","rlang","rmarkdown","rprojroot","rstudioapi","rvest","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","tools","utils","vctrs","withr","xfun","xml2","xtable","yaml"]},{"type":"character","attributes":{},"value":["0.2.1","1.2.0","4.0.2","0.7.2","1.1.0","2.1.0","2.0-0","4.0.2","1.3.4","4.3","4.0.2","1.1.0","2.0.0","0.6.27","1.0.2","0.3.1","0.14","0.4.1","1.0.1","0.5.0","1.5.0","0.3.0","0.1.0","3.3.2","1.4.2","0.1.0.9004","4.0.2","4.0.2","4.0.2","0.3.0","2.3.1","0.5.3","0.5.0.9001","1.5.2","1.5.4","1.4.2","1.7.1","1.30","1.1.0.1","0.10.1.9006","0.2.0","1.7.9.2","2.0.1","1.1","4.0.2","0.9","0.1.8","0.5.0","1.4.6","2.0.3","1.1.1","0.3.4","2.5.0","1.0.5","1.4.0","1.3.1","0.3.0","0.4.8","2.5","2.0.2","0.13","0.3.6","1.1.1","1.5.0","4.0.2","1.5.3","1.4.0","3.0.4","1.1.2","1.1.0","1.3.0","4.0.2","4.0.2","0.3.4","2.3.0","0.19","1.3.2","1.8-4","2.2.1"]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+</div>
+
+</div> <!-- topics -->
+
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h2 class="title toc-ignore" style="display:none;">Tutorial</h2>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</div> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+
+<script>
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+</body>
+
+</html>
