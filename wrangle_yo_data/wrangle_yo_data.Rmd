@@ -6,9 +6,6 @@ output:
 runtime: shiny_prerendered
 ---
 
-palmerpenguins::penguins
-
-
 ```{r setup, include=FALSE}
 library(learnr)
 library(dplyr)
