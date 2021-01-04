@@ -237,10 +237,10 @@ lotr  <- readr::read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/ma
 lotr
 ```
 
-[Describe problem]
+1. We want to make it so we can graph the amount of words for each gender within races from each movie
 
 ```{r tidy-format-question, echo = FALSE}
-question("1. Would you say this data is in tidy format?",
+question("Would you say this data is in tidy format?",
          answer("Yes", correct = TRUE),
          answer("No"),
          random_answer_order = TRUE,
@@ -273,6 +273,16 @@ grade_code()
 ```
 
 3. Re-lengthen the wide LOTR data from Question 2 above.
+
+```{r, echo = FALSE}
+lotr_wide <- lotr %>%
+  pivot_wider(
+    id_cols = c(-Race, -Words),
+    names_from = Race,
+    values_from = Words
+  )
+```
+
 
 ```{r lotr-exercise-long, exercise = TRUE}
 lotr_wide %>%

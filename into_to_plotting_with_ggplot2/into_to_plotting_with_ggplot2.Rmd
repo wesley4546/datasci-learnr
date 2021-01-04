@@ -121,6 +121,7 @@ ggplot(gapminder, aes(gdpPercap, lifeExp)) +
   theme_bw() +
   ylab("Life Expectancy")
 ```
+
 This scatterplot has the following components of the grammar of graphics.
 
 |   Grammar Component   |           Specification          |
@@ -288,6 +289,9 @@ ggplot(mauna, aes(x = month, y = conc)) +
   geom_line()
 ```
 
+```{r mauna-exercise-check}
+grade_code()
+```
 ## A tour of some important `geom`s
 
 Here, we’ll explore some common plot types, and how to produce them with `ggplot2`.

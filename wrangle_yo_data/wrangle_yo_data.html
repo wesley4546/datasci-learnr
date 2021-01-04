@@ -136,14 +136,22 @@ $(document).ready(function () {
 </ul>
 <div id="section-resources" class="section level3">
 <h3>Resources</h3>
-<p>STAT 545 chapters: - <a href="https://stat545.com/dplyr-intro.html">stat545: dplyr-intro</a> - <a href="https://stat545.com/dplyr-single.html">stat545: dplyr-single</a></p>
+<p>STAT 545 chapters:</p>
+<ul>
+<li><a href="https://stat545.com/dplyr-intro.html">stat545: dplyr-intro</a></li>
+<li><a href="https://stat545.com/dplyr-single.html">stat545: dplyr-single</a></li>
+</ul>
 <p>More detail can be found in the <a href="https://r4ds.had.co.nz/transform.html">r4ds: transform chapter</a>.</p>
 <p>Here are some supplementary resources:</p>
 <ul>
 <li>A similar resource to the r4ds one above is the <a href="https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html">intro to dplyr vignette</a>.</li>
 <li>Want to read more about piping? See <a href="http://r4ds.had.co.nz/pipes.html">r4ds: pipes</a>.</li>
 </ul>
-<p>Some advanced topics you might find useful: - For window functions and how dplyr handles them, see the <a href="https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html">window-functions</a> vignette for the <code>dplyr</code> package. - For time series data, see the <a href="https://tsibble.tidyverts.org/">tsibble demo</a></p>
+<p>Some advanced topics you might find useful:</p>
+<ul>
+<li>For window functions and how dplyr handles them, see the <a href="https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html">window-functions</a> vignette for the <code>dplyr</code> package.</li>
+<li>For time series data, see the <a href="https://tsibble.tidyverts.org/">tsibble demo</a></li>
+</ul>
 </div>
 </div>
 <div id="section-intro-to-dplyr-syntax" class="section level2">
@@ -279,14 +287,6 @@ non_edu_bfi_data</code></pre>
 </div>
 <div id="section-check-your-understanding-select" class="section level3">
 <h3>Check your understanding: <code>select()</code></h3>
-<pre class="r"><code>question(&quot;What do I put infront of my column name to remove it using `select()`?&quot;,
-         answer(&quot;`+`&quot;),
-         answer(&quot;`remove()`&quot;),
-         answer(&quot;`-`&quot;, correct = TRUE),
-         answer(&quot;`!=`&quot;),
-         random_answer_order = TRUE,
-         allow_retry = TRUE
-)</code></pre>
 <div class="panel panel-default">
 <div data-label="cyu-select" class="tutorial-question panel-body">
 <div id="cyu-select-answer_container" class="shiny-html-output"></div>
@@ -332,14 +332,12 @@ desc_bfi</code></pre>
 <h3><code>arrange()</code>ing</h3>
 <p><code>arrange()</code> our <code>bfi_data</code> to the descending order of the <code>.id</code> column and call it <code>desc_bfi</code>.</p>
 <div class="tutorial-exercise" data-label="exercise-3" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="exercise-3-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>desc_bfi &lt;-
   bfi_data %&gt;% 
-  arrange(desc(.id))
-
-desc_bfi</code></pre>
+  arrange(desc(.id))</code></pre>
 </div>
 </div>
 </div>
@@ -502,14 +500,12 @@ openness_cut_off</code></pre>
 <p>Say I was only interested in looking at ages 20-29.</p>
 <p><em>HINT: the <code>&amp;</code> operator is used to check if two logical operations are TRUE</em></p>
 <div class="tutorial-exercise" data-label="filter-multi" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="filter-multi-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>age_bfi &lt;-
   bfi_data %&gt;% 
-  filter(age &gt; 20 &amp; age &lt; 29)
-
-age_bfi</code></pre>
+  filter(age &gt; 20 &amp; age &lt; 29)</code></pre>
 </div>
 </div>
 <div id="section-using-in-with-filter" class="section level3">
@@ -546,16 +542,6 @@ age_bfi</code></pre>
 </div>
 <div id="section-check-your-understanding-filter" class="section level3">
 <h3>Check your understanding: <code>filter()</code></h3>
-<pre class="r"><code>quiz(
-  question(&quot;What line of code would I use to `filter()` ages between 20 and 50?&quot;,
-    answer(&quot;`filter(20 &lt; column &gt; 50`&quot;),
-    answer(&quot;`filter(column == 20 - 50)`&quot;),
-    answer(&quot;`filter(column &gt; 20 &amp; column &lt; 50)`&quot;, correct = TRUE),
-    answer(&quot;`filter(column[20:50])`&quot;),
-    random_answer_order = TRUE,
-    allow_retry = TRUE
-  )
-)</code></pre>
 <p><div class="panel-heading tutorial-quiz-title">Quiz</div><div class="panel panel-default">
 <div data-label="cyu-filter-1-1" class="tutorial-question panel-body">
 <div id="cyu-filter-1-1-answer_container" class="shiny-html-output"></div>
@@ -598,21 +584,19 @@ age_bfi</code></pre>
 <p>Give it a go!</p>
 <p>With <code>bfi_data</code> <code>filter()</code> the <code>age</code> column to only include ages less than 50 and call it <code>age_bfi</code>.</p>
 <div class="tutorial-exercise" data-label="exercise-4" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="exercise-4-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>age_bfi &lt;-
   bfi_data %&gt;% 
-  filter(age &lt; 50)
-
-age_bfi</code></pre>
+  filter(age &lt; 50)</code></pre>
 </div>
 </div>
 <div id="section-mutateing" class="section level3">
 <h3><code>mutate()</code>ing</h3>
 <p>Using <code>mtcars</code>, create a column called <code>wt_disp</code> that multiplies the <code>wt</code> and <code>disp</code> columns with <code>mutate()</code>.</p>
 <div class="tutorial-exercise" data-label="mutate-exercise" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="mutate-exercise-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>mtcars %&gt;% 
@@ -664,7 +648,7 @@ age_bfi</code></pre>
 <h3><code>summarize()</code>ing</h3>
 <p>Get the mean and standard deviation of <code>conscientious</code> in <code>bfi_data</code> using the <code>summarize()</code> function.</p>
 <div class="tutorial-exercise" data-label="summarize-exercise" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="summarize-exercise-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>bfi_data %&gt;% 
@@ -677,7 +661,7 @@ age_bfi</code></pre>
 <p>You can also create new variables and group by that variable simultaneously.</p>
 <p>Try splitting <code>height</code> by “small” and “large” using 60 as a threshold:</p>
 <div class="tutorial-exercise" data-label="group_by-exercise" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="group_by-exercise-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>starwars %&gt;% 
@@ -734,7 +718,7 @@ age_bfi</code></pre>
 <h3>Practice 1</h3>
 <p>Looking at our <code>bfi_data</code>, I want to get the mean and standard deviation of <code>openness</code> all 40-49 year old participants grouped by their <code>education.</code></p>
 <div class="tutorial-exercise" data-label="summ-group-filter-exercise" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="summ-group-filter-exercise-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>bfi_data %&gt;% 
@@ -748,7 +732,7 @@ age_bfi</code></pre>
 <h3>Practice 2</h3>
 <p>I want to subset female <code>neuroticism</code> scores with level 3 <code>education.</code></p>
 <div class="tutorial-exercise" data-label="female-neuroticism" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="female-neuroticism-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>bfi_data %&gt;% 
@@ -761,7 +745,7 @@ age_bfi</code></pre>
 <h3>Practice 3</h3>
 <p>Using <code>mtcars</code> I want to group by <code>cyl</code>, and find the mean of <code>mpg</code>, <code>disp</code>, and <code>wt</code> for each group of <code>cyl</code>.</p>
 <div class="tutorial-exercise" data-label="mtcars-cyl" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="mtcars-cyl-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>mtcars %&gt;% 
@@ -917,16 +901,16 @@ learnr:::store_exercise_cache("select-help", list(setup = NULL, chunks = list(li
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "cyu-select", question = structure("What do I put infront of my column name to remove it using <code>select()<\u002fcode>?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_2816545", 
+"character")), answers = list(structure(list(id = "lnr_ans_c0498be", 
     option = "`+`", value = "`+`", label = structure("<code>+<\u002fcode>", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_288ef59", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_2482f42", 
     option = "`remove()`", value = "`remove()`", label = structure("<code>remove()<\u002fcode>", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_433afb7", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_84691d", 
     option = "`-`", value = "`-`", label = structure("<code>-<\u002fcode>", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d5146bc", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e48f569", 
     option = "`!=`", value = "`!=`", label = structure("<code>!=<\u002fcode>", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("Submit Answer", html = TRUE, class = c("html", 
@@ -937,7 +921,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "cyu-select-answer", question = "cyu-select"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat do I put infront of my column name to remove it using <code>select()<\u002fcode>?\n<br/><br/><br/>", html = TRUE, class = c("html", 
 "character")), random_answer_order = TRUE, allow_retry = TRUE, 
-    seed = 1013345664.52812, options = list()), class = c("learnr_radio", 
+    seed = 361769214.831538, options = list()), class = c("learnr_radio", 
 "tutorial_question")))
 </script>
  
@@ -987,31 +971,30 @@ output$`tutorial-exercise-exercise-3-output` <- renderUI({
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache("exercise-3", list(setup = NULL, chunks = list(list(label = "exercise-3", code = "", 
     opts = list(label = "\"exercise-3\"", exercise = "TRUE"), 
-    engine = "r")), code_check = NULL, error_check = NULL, check = NULL, 
-    solution = structure(c("desc_bfi <-", "  bfi_data %>% ", 
-    "  arrange(desc(.id))", "", "desc_bfi"), chunk_opts = list(
-        label = "exercise-3-solution")), options = list(eval = FALSE, 
-        echo = TRUE, results = "markup", tidy = FALSE, tidy.opts = NULL, 
-        collapse = FALSE, prompt = FALSE, comment = NA, highlight = FALSE, 
-        strip.white = TRUE, size = "normalsize", background = "#F7F7F7", 
-        cache = 0, cache.path = "wrangle_yo_data_cache/html/", 
-        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
-        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
-        fig.show = "asis", fig.align = "default", fig.path = "wrangle_yo_data_files/figure-html/", 
-        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
-        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
-        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
-        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
-        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
-        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
-        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
-        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
-        max.print = 1000, tutorial = TRUE, exercise.timelimit = 60, 
-        exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
-        exercise.error.check.code = "grade_code()", label = "exercise-3", 
-        exercise = TRUE, code = "", out.width.px = 624, out.height.px = 384, 
-        params.src = "exercise-3, exercise=TRUE", fig.num = 0L, 
-        exercise.df_print = "paged"), engine = "r"))
+    engine = "r")), code_check = NULL, error_check = NULL, check = structure("grade_code()", chunk_opts = list(
+    label = "exercise-3-check")), solution = structure(c("desc_bfi <-", 
+"  bfi_data %>% ", "  arrange(desc(.id))"), chunk_opts = list(
+    label = "exercise-3-solution")), options = list(eval = FALSE, 
+    echo = TRUE, results = "markup", tidy = FALSE, tidy.opts = NULL, 
+    collapse = FALSE, prompt = FALSE, comment = NA, highlight = FALSE, 
+    strip.white = TRUE, size = "normalsize", background = "#F7F7F7", 
+    cache = 0, cache.path = "wrangle_yo_data_cache/html/", cache.vars = NULL, 
+    cache.lazy = TRUE, dependson = NULL, autodep = FALSE, cache.rebuild = FALSE, 
+    fig.keep = "high", fig.show = "asis", fig.align = "default", 
+    fig.path = "wrangle_yo_data_files/figure-html/", dev = "png", 
+    dev.args = NULL, dpi = 192, fig.ext = "png", fig.width = 6.5, 
+    fig.height = 4, fig.env = "figure", fig.cap = NULL, fig.scap = NULL, 
+    fig.lp = "fig:", fig.subcap = NULL, fig.pos = "", out.width = 624, 
+    out.height = NULL, out.extra = NULL, fig.retina = 2, external = TRUE, 
+    sanitize = FALSE, interval = 1, aniopts = "controls,loop", 
+    warning = TRUE, error = FALSE, message = TRUE, render = NULL, 
+    ref.label = NULL, child = NULL, engine = "r", split = FALSE, 
+    include = TRUE, purl = TRUE, max.print = 1000, tutorial = TRUE, 
+    exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
+    exercise.error.check.code = "grade_code()", label = "exercise-3", 
+    exercise = TRUE, code = "", out.width.px = 624, out.height.px = 384, 
+    params.src = "exercise-3, exercise=TRUE", fig.num = 0L, exercise.df_print = "paged"), 
+    engine = "r"))
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
@@ -1024,49 +1007,48 @@ output$`tutorial-exercise-filter-multi-output` <- renderUI({
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache("filter-multi", list(setup = NULL, chunks = list(list(label = "filter-multi", 
     code = "", opts = list(label = "\"filter-multi\"", exercise = "TRUE"), 
-    engine = "r")), code_check = NULL, error_check = NULL, check = NULL, 
-    solution = structure(c("age_bfi <-", "  bfi_data %>% ", "  filter(age > 20 & age < 29)", 
-    "", "age_bfi"), chunk_opts = list(label = "filter-multi-solution")), 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
-        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
-        comment = NA, highlight = FALSE, strip.white = TRUE, 
-        size = "normalsize", background = "#F7F7F7", cache = 0, 
-        cache.path = "wrangle_yo_data_cache/html/", cache.vars = NULL, 
-        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
-        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "wrangle_yo_data_files/figure-html/", 
-        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
-        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
-        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
-        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
-        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
-        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
-        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
-        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
-        max.print = 1000, tutorial = TRUE, exercise.timelimit = 60, 
-        exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
-        exercise.error.check.code = "grade_code()", label = "filter-multi", 
-        exercise = TRUE, code = "", out.width.px = 624, out.height.px = 384, 
-        params.src = "filter-multi, exercise=TRUE", fig.num = 0L, 
-        exercise.df_print = "paged"), engine = "r"))
+    engine = "r")), code_check = NULL, error_check = NULL, check = structure("grade_code()", chunk_opts = list(
+    label = "filter-multi-check")), solution = structure(c("age_bfi <-", 
+"  bfi_data %>% ", "  filter(age > 20 & age < 29)"), chunk_opts = list(
+    label = "filter-multi-solution")), options = list(eval = FALSE, 
+    echo = TRUE, results = "markup", tidy = FALSE, tidy.opts = NULL, 
+    collapse = FALSE, prompt = FALSE, comment = NA, highlight = FALSE, 
+    strip.white = TRUE, size = "normalsize", background = "#F7F7F7", 
+    cache = 0, cache.path = "wrangle_yo_data_cache/html/", cache.vars = NULL, 
+    cache.lazy = TRUE, dependson = NULL, autodep = FALSE, cache.rebuild = FALSE, 
+    fig.keep = "high", fig.show = "asis", fig.align = "default", 
+    fig.path = "wrangle_yo_data_files/figure-html/", dev = "png", 
+    dev.args = NULL, dpi = 192, fig.ext = "png", fig.width = 6.5, 
+    fig.height = 4, fig.env = "figure", fig.cap = NULL, fig.scap = NULL, 
+    fig.lp = "fig:", fig.subcap = NULL, fig.pos = "", out.width = 624, 
+    out.height = NULL, out.extra = NULL, fig.retina = 2, external = TRUE, 
+    sanitize = FALSE, interval = 1, aniopts = "controls,loop", 
+    warning = TRUE, error = FALSE, message = TRUE, render = NULL, 
+    ref.label = NULL, child = NULL, engine = "r", split = FALSE, 
+    include = TRUE, purl = TRUE, max.print = 1000, tutorial = TRUE, 
+    exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
+    exercise.error.check.code = "grade_code()", label = "filter-multi", 
+    exercise = TRUE, code = "", out.width.px = 624, out.height.px = 384, 
+    params.src = "filter-multi, exercise=TRUE", fig.num = 0L, 
+    exercise.df_print = "paged"), engine = "r"))
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "cyu-filter-1-1", 
     question = structure("What line of code would I use to <code>filter()<\u002fcode> ages between 20 and 50?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_c92841f", 
+    "character")), answers = list(structure(list(id = "lnr_ans_bf726fb", 
         option = "`filter(20 < column > 50`", value = "`filter(20 < column > 50`", 
         label = structure("<code>filter(20 &lt; column &gt; 50<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f148dae", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1bf4bf3", 
         option = "`filter(column == 20 - 50)`", value = "`filter(column == 20 - 50)`", 
         label = structure("<code>filter(column == 20 - 50)<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5fa4ef", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b5a7f23", 
         option = "`filter(column > 20 & column < 50)`", value = "`filter(column > 20 & column < 50)`", 
         label = structure("<code>filter(column &gt; 20 &amp; column &lt; 50)<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9ef1645", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_36ccb59", 
         option = "`filter(column[20:50])`", value = "`filter(column[20:50])`", 
         label = structure("<code>filter(column[20:50])<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
@@ -1079,7 +1061,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
         answer = "cyu-filter-1-1-answer", question = "cyu-filter-1-1"), 
     loading = structure("<strong>Loading:<\u002fstrong> \nWhat line of code would I use to <code>filter()<\u002fcode> ages between 20 and 50?\n<br/><br/><br/>", html = TRUE, class = c("html", 
     "character")), random_answer_order = TRUE, allow_retry = TRUE, 
-    seed = 364339499.830341, options = list()), class = c("learnr_radio", 
+    seed = 84754127.9605333, options = list()), class = c("learnr_radio", 
 "tutorial_question")))
 </script>
  
@@ -1093,9 +1075,9 @@ output$`tutorial-exercise-exercise-4-output` <- renderUI({
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache("exercise-4", list(setup = NULL, chunks = list(list(label = "exercise-4", code = "", 
     opts = list(label = "\"exercise-4\"", exercise = "TRUE"), 
-    engine = "r")), code_check = NULL, error_check = NULL, check = NULL, 
-    solution = structure(c("age_bfi <-", "  bfi_data %>% ", "  filter(age < 50)", 
-    "", "age_bfi"), chunk_opts = list(label = "exercise-4-solution")), 
+    engine = "r")), code_check = NULL, error_check = NULL, check = structure("grade_code()", chunk_opts = list(
+    label = "exercise-4-check")), solution = structure(c("age_bfi <-", 
+"  bfi_data %>% ", "  filter(age < 50)"), chunk_opts = list(label = "exercise-4-solution")), 
     options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, strip.white = TRUE, 
@@ -1130,9 +1112,9 @@ output$`tutorial-exercise-mutate-exercise-output` <- renderUI({
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache("mutate-exercise", list(setup = NULL, chunks = list(list(label = "mutate-exercise", 
     code = "", opts = list(label = "\"mutate-exercise\"", exercise = "TRUE"), 
-    engine = "r")), code_check = NULL, error_check = NULL, check = NULL, 
-    solution = structure(c("mtcars %>% ", " mutate(wt_disp = wt * disp )"
-    ), chunk_opts = list(label = "mutate-exercise-solution")), 
+    engine = "r")), code_check = NULL, error_check = NULL, check = structure("grade_code()", chunk_opts = list(
+    label = "mutate-exercise-check")), solution = structure(c("mtcars %>% ", 
+" mutate(wt_disp = wt * disp )"), chunk_opts = list(label = "mutate-exercise-solution")), 
     options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, strip.white = TRUE, 
@@ -1168,7 +1150,8 @@ output$`tutorial-exercise-summarize-exercise-output` <- renderUI({
 learnr:::store_exercise_cache("summarize-exercise", list(setup = NULL, chunks = list(list(label = "summarize-exercise", 
     code = "", opts = list(label = "\"summarize-exercise\"", 
         exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = structure(c("bfi_data %>% ", 
+    error_check = NULL, check = structure("grade_code()", chunk_opts = list(
+        label = "summarize-exercise-check")), solution = structure(c("bfi_data %>% ", 
     "  summarize(mu = mean(conscientious),", "            sigma = sd(conscientious))"
     ), chunk_opts = list(label = "summarize-exercise-solution")), 
     options = list(eval = FALSE, echo = TRUE, results = "markup", 
@@ -1205,31 +1188,30 @@ output$`tutorial-exercise-group_by-exercise-output` <- renderUI({
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache("group_by-exercise", list(setup = NULL, chunks = list(list(label = "group_by-exercise", 
     code = "", opts = list(label = "\"group_by-exercise\"", exercise = "TRUE"), 
-    engine = "r")), code_check = NULL, error_check = NULL, check = NULL, 
-    solution = structure(c("starwars %>% ", "  group_by(small_height = height < 60)"
-    ), chunk_opts = list(label = "group_by-exercise-solution")), 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
-        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
-        comment = NA, highlight = FALSE, strip.white = TRUE, 
-        size = "normalsize", background = "#F7F7F7", cache = 0, 
-        cache.path = "wrangle_yo_data_cache/html/", cache.vars = NULL, 
-        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
-        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "wrangle_yo_data_files/figure-html/", 
-        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
-        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
-        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
-        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
-        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
-        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
-        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
-        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
-        max.print = 1000, tutorial = TRUE, exercise.timelimit = 60, 
-        exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
-        exercise.error.check.code = "grade_code()", label = "group_by-exercise", 
-        exercise = TRUE, code = "", out.width.px = 624, out.height.px = 384, 
-        params.src = "group_by-exercise, exercise=TRUE", fig.num = 0L, 
-        exercise.df_print = "paged"), engine = "r"))
+    engine = "r")), code_check = NULL, error_check = NULL, check = structure("grade_code()", chunk_opts = list(
+    label = "group_by-exercise-check")), solution = structure(c("starwars %>% ", 
+"  group_by(small_height = height < 60)"), chunk_opts = list(
+    label = "group_by-exercise-solution")), options = list(eval = FALSE, 
+    echo = TRUE, results = "markup", tidy = FALSE, tidy.opts = NULL, 
+    collapse = FALSE, prompt = FALSE, comment = NA, highlight = FALSE, 
+    strip.white = TRUE, size = "normalsize", background = "#F7F7F7", 
+    cache = 0, cache.path = "wrangle_yo_data_cache/html/", cache.vars = NULL, 
+    cache.lazy = TRUE, dependson = NULL, autodep = FALSE, cache.rebuild = FALSE, 
+    fig.keep = "high", fig.show = "asis", fig.align = "default", 
+    fig.path = "wrangle_yo_data_files/figure-html/", dev = "png", 
+    dev.args = NULL, dpi = 192, fig.ext = "png", fig.width = 6.5, 
+    fig.height = 4, fig.env = "figure", fig.cap = NULL, fig.scap = NULL, 
+    fig.lp = "fig:", fig.subcap = NULL, fig.pos = "", out.width = 624, 
+    out.height = NULL, out.extra = NULL, fig.retina = 2, external = TRUE, 
+    sanitize = FALSE, interval = 1, aniopts = "controls,loop", 
+    warning = TRUE, error = FALSE, message = TRUE, render = NULL, 
+    ref.label = NULL, child = NULL, engine = "r", split = FALSE, 
+    include = TRUE, purl = TRUE, max.print = 1000, tutorial = TRUE, 
+    exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
+    exercise.error.check.code = "grade_code()", label = "group_by-exercise", 
+    exercise = TRUE, code = "", out.width.px = 624, out.height.px = 384, 
+    params.src = "group_by-exercise, exercise=TRUE", fig.num = 0L, 
+    exercise.df_print = "paged"), engine = "r"))
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
@@ -1243,7 +1225,8 @@ output$`tutorial-exercise-summ-group-filter-exercise-output` <- renderUI({
 learnr:::store_exercise_cache("summ-group-filter-exercise", list(setup = NULL, chunks = list(list(label = "summ-group-filter-exercise", 
     code = "", opts = list(label = "\"summ-group-filter-exercise\"", 
         exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = structure(c("bfi_data %>% ", 
+    error_check = NULL, check = structure("grade_code()", chunk_opts = list(
+        label = "summ-group-filter-exercise-check")), solution = structure(c("bfi_data %>% ", 
     "  group_by(education) %>% ", "  filter(age >= 40 & age <= 49) %>% ", 
     "  summarize(mean = mean(openness),", "            sd = sd(openness))"
     ), chunk_opts = list(label = "summ-group-filter-exercise-solution")), 
@@ -1282,7 +1265,8 @@ output$`tutorial-exercise-female-neuroticism-output` <- renderUI({
 learnr:::store_exercise_cache("female-neuroticism", list(setup = NULL, chunks = list(list(label = "female-neuroticism", 
     code = "", opts = list(label = "\"female-neuroticism\"", 
         exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = structure(c("bfi_data %>% ", 
+    error_check = NULL, check = structure("grade_code()", chunk_opts = list(
+        label = "female-neuroticism-check")), solution = structure(c("bfi_data %>% ", 
     "  filter(gender == \"female\") %>% ", "  filter(education == 3) %>% ", 
     "  select(neuroticism)"), chunk_opts = list(label = "female-neuroticism-solution")), 
     options = list(eval = FALSE, echo = TRUE, results = "markup", 
@@ -1319,32 +1303,31 @@ output$`tutorial-exercise-mtcars-cyl-output` <- renderUI({
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache("mtcars-cyl", list(setup = NULL, chunks = list(list(label = "mtcars-cyl", code = "", 
     opts = list(label = "\"mtcars-cyl\"", exercise = "TRUE"), 
-    engine = "r")), code_check = NULL, error_check = NULL, check = NULL, 
-    solution = structure(c("mtcars %>% ", "  group_by(cyl) %>% ", 
-    "  summarize(mean_mpg = mean(mpg),", "            mean_disp = mean(disp),", 
-    "            mean_wt = mean(wt))"), chunk_opts = list(label = "mtcars-cyl-solution")), 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
-        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
-        comment = NA, highlight = FALSE, strip.white = TRUE, 
-        size = "normalsize", background = "#F7F7F7", cache = 0, 
-        cache.path = "wrangle_yo_data_cache/html/", cache.vars = NULL, 
-        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
-        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "wrangle_yo_data_files/figure-html/", 
-        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
-        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
-        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
-        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
-        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
-        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
-        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
-        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
-        max.print = 1000, tutorial = TRUE, exercise.timelimit = 60, 
-        exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
-        exercise.error.check.code = "grade_code()", label = "mtcars-cyl", 
-        exercise = TRUE, code = "", out.width.px = 624, out.height.px = 384, 
-        params.src = "mtcars-cyl, exercise = TRUE", fig.num = 0L, 
-        exercise.df_print = "paged"), engine = "r"))
+    engine = "r")), code_check = NULL, error_check = NULL, check = structure("grade_code()", chunk_opts = list(
+    label = "mtcars-cyl-check")), solution = structure(c("mtcars %>% ", 
+"  group_by(cyl) %>% ", "  summarize(mean_mpg = mean(mpg),", 
+"            mean_disp = mean(disp),", "            mean_wt = mean(wt))"
+), chunk_opts = list(label = "mtcars-cyl-solution")), options = list(
+    eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+    tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+    highlight = FALSE, strip.white = TRUE, size = "normalsize", 
+    background = "#F7F7F7", cache = 0, cache.path = "wrangle_yo_data_cache/html/", 
+    cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+    cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+    fig.align = "default", fig.path = "wrangle_yo_data_files/figure-html/", 
+    dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+    fig.width = 6.5, fig.height = 4, fig.env = "figure", fig.cap = NULL, 
+    fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, fig.pos = "", 
+    out.width = 624, out.height = NULL, out.extra = NULL, fig.retina = 2, 
+    external = TRUE, sanitize = FALSE, interval = 1, aniopts = "controls,loop", 
+    warning = TRUE, error = FALSE, message = TRUE, render = NULL, 
+    ref.label = NULL, child = NULL, engine = "r", split = FALSE, 
+    include = TRUE, purl = TRUE, max.print = 1000, tutorial = TRUE, 
+    exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
+    exercise.error.check.code = "grade_code()", label = "mtcars-cyl", 
+    exercise = TRUE, code = "", out.width.px = 624, out.height.px = 384, 
+    params.src = "mtcars-cyl, exercise = TRUE", fig.num = 0L, 
+    exercise.df_print = "paged"), engine = "r"))
 </script>
  <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="dependencies">

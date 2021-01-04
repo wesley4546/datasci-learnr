@@ -1,5 +1,5 @@
 ---
-title: "Tutorial"
+title: "Reproducibility and Coding Best Practice"
 output: 
   learnr::tutorial:
     progressive: true
@@ -13,7 +13,7 @@ gradethis_setup()
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Exercise 
+## Exercise
 
 *Here's a simple exercise with an empty code chunk provided for entering the answer.*
 # Reproducibility and Coding Best Practices

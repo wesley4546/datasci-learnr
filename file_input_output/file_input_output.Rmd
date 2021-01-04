@@ -1,5 +1,5 @@
 ---
-title: "Tutorial"
+title: "File input/output (I/O)"
 output: 
   learnr::tutorial:
     progressive: true
@@ -9,7 +9,11 @@ runtime: shiny_prerendered
 ```{r setup, include=FALSE}
 library(learnr)
 library(gradethis)
+library(readr)
+library(dplyr)
+
 gradethis_setup()
+
 ```
 
 
@@ -162,6 +166,7 @@ Click `File → New Project…` and then make a new project in your participatio
 folder. Give it a useful name like `DataSci-participation.Rproj`.
 
 When you double click on a .Rproj file, it:
+
   1. Opens a new fresh R session, with
   2. The working directory set to the location of the .Rproj file, and
   3. No connection whatsoever to any other R sessions you already have open

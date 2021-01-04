@@ -49,7 +49,10 @@ Specific `dplyr` functions we will cover
 
 ### Resources
 
-STAT 545 chapters: - [stat545: dplyr-intro](https://stat545.com/dplyr-intro.html) - [stat545: dplyr-single](https://stat545.com/dplyr-single.html)
+STAT 545 chapters: 
+
+-   [stat545: dplyr-intro](https://stat545.com/dplyr-intro.html) 
+-   [stat545: dplyr-single](https://stat545.com/dplyr-single.html)
 
 More detail can be found in the [r4ds: transform chapter](https://r4ds.had.co.nz/transform.html).
 
@@ -58,7 +61,10 @@ Here are some supplementary resources:
 -   A similar resource to the r4ds one above is the [intro to dplyr vignette](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html).
 -   Want to read more about piping? See [r4ds: pipes](http://r4ds.had.co.nz/pipes.html).
 
-Some advanced topics you might find useful: - For window functions and how dplyr handles them, see the [window-functions](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html) vignette for the `dplyr` package. - For time series data, see the [tsibble demo](https://tsibble.tidyverts.org/)
+Some advanced topics you might find useful:
+
+-   For window functions and how dplyr handles them, see the [window-functions](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html) vignette for the `dplyr` package. 
+-   For time series data, see the [tsibble demo](https://tsibble.tidyverts.org/)
 
 ## Intro to `dplyr` syntax
 
@@ -209,7 +215,7 @@ non_edu_bfi_data
 
 ### Check your understanding: `select()`
 
-```{r cyu-select}
+```{r cyu-select, echo = FALSE}
 question("What do I put infront of my column name to remove it using `select()`?",
          answer("`+`"),
          answer("`remove()`"),
@@ -271,8 +277,10 @@ grade_code()
 desc_bfi <-
   bfi_data %>% 
   arrange(desc(.id))
+```
 
-desc_bfi
+```{r exercise-3-check}
+grade_code()
 ```
 ## Logical Operators in `R`
 
@@ -366,13 +374,13 @@ Say I was only interested in looking at ages 20-29.
 age_bfi <-
   bfi_data %>% 
   filter(age > 20 & age < 29)
-
-age_bfi
 ```
 
+```{r filter-multi-check}
+grade_code()
+```
 
 ### using `%in%` with `filter()`
-
 
 Now, there is a special use case when trying to filter out specific variables.
 
@@ -404,7 +412,7 @@ If we compare the output of both of the code chunks above, you'll see that using
 
 ### Check your understanding: `filter()`
 
-```{r cyu-filter-1}
+```{r cyu-filter-1, echo = FALSE}
 quiz(
   question("What line of code would I use to `filter()` ages between 20 and 50?",
     answer("`filter(20 < column > 50`"),
@@ -462,8 +470,10 @@ With `bfi_data` `filter()` the `age` column to only include ages less than 50 an
 age_bfi <-
   bfi_data %>% 
   filter(age < 50)
+```
 
-age_bfi
+```{r exercise-4-check}
+grade_code()
 ```
 
 ### `mutate()`ing
@@ -479,6 +489,9 @@ mtcars %>%
  mutate(wt_disp = wt * disp )
 ```
 
+```{r mutate-exercise-check}
+grade_code()
+```
 
 ## `summarize()`
 
@@ -538,6 +551,10 @@ bfi_data %>%
             sigma = sd(conscientious))
 ```
 
+```{r summarize-exercise-check}
+grade_code()
+```
+
 ### Advanced `group_by()`
 
 You can also create new variables and group by that variable simultaneously. 
@@ -553,6 +570,9 @@ starwars %>%
   group_by(small_height = height < 60)
 ```
 
+```{r group_by-exercise-check}
+grade_code()
+```
 
 ## Function Types
 
@@ -589,6 +609,10 @@ bfi_data %>%
             sd = sd(openness))
 ```
 
+```{r summ-group-filter-exercise-check}
+grade_code()
+```
+
 ### Practice 2
 
 I want to subset female `neuroticism` scores with level 3 `education.`
@@ -604,6 +628,9 @@ bfi_data %>%
   select(neuroticism)
 ```
 
+```{r female-neuroticism-check}
+grade_code()
+```
 
 ### Practice 3
 
@@ -619,4 +646,8 @@ mtcars %>%
   summarize(mean_mpg = mean(mpg),
             mean_disp = mean(disp),
             mean_wt = mean(wt))
+```
+
+```{r mtcars-cyl-check}
+grade_code()
 ```

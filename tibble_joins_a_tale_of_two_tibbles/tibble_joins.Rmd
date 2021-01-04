@@ -9,6 +9,8 @@ runtime: shiny_prerendered
 ```{r setup, include=FALSE}
 library(learnr)
 library(gradethis)
+library(dplyr)
+
 gradethis_setup()
 knitr::opts_chunk$set(echo = FALSE)
 ```
@@ -106,7 +108,7 @@ time %>%
   FILL_THIS_IN(album, by = FILL_THIS_IN)
 ```
 
-```{r left_join_exercise-solution, exercise=TRUE}
+```{r left_join_exercise-solution}
 time %>% 
   left_join(album, by = c("song","artist_name"))
 ```
@@ -122,7 +124,7 @@ time %>%
   FILL_THIS_IN(album, by = "song")
 ```
 
-```{r anti_join_exercise-solution, exercise = TRUE}
+```{r anti_join_exercise-solution}
 time %>% 
   anti_join(album, by = "song")
 ```

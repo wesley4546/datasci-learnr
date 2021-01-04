@@ -238,7 +238,8 @@ plot(mod)</code></pre>
   scale_x_log10(&quot;GDP per capita&quot;, labels = scales::dollar_format()) +
   theme_bw() +
   ylab(&quot;Life Expectancy&quot;)</code></pre>
-<p><img src="into_to_plotting_with_ggplot2_files/figure-html/unnamed-chunk-2-1.png" width="624" /> This scatterplot has the following components of the grammar of graphics.</p>
+<p><img src="into_to_plotting_with_ggplot2_files/figure-html/unnamed-chunk-2-1.png" width="624" /></p>
+<p>This scatterplot has the following components of the grammar of graphics.</p>
 <table>
 <thead>
 <tr class="header">
@@ -415,7 +416,7 @@ plot(mod)</code></pre>
 <div class="tutorial-exercise" data-label="mauna-exercise" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>ggplot(FILL_THIS_IN, aes(FILL_THIS_IN, FILL_THIS_IN)) +
   FILL_THIS_IN()</code></pre>
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<div class=\"tutorial_engine_icon\"><svg role=\"img\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><title>R icon<\/title><path d=\"M12 18.82c-6.627 0-12-3.598-12-8.037s5.373-8.037 12-8.037 12 3.599 12 8.037-5.373 8.037-12 8.037zm1.837-12.932c-5.038 0-9.121 2.46-9.121 5.495s4.083 5.494 9.12 5.494 8.756-1.682 8.756-5.494-3.718-5.495-8.755-5.495zM18.275 15.194a9.038 9.038 0 0 1 1.149.433 2.221 2.221 0 0 1 .582.416 1.573 1.573 0 0 1 .266.383l2.863 4.826-4.627.002-2.163-4.063a5.229 5.229 0 0 0-.716-.982.753.753 0 0 0-.549-.25h-1.099v5.292l-4.093.001V7.737h8.221s3.744.067 3.744 3.63a3.822 3.822 0 0 1-3.578 3.827zm-1.78-4.526l-2.479-.001v2.298h2.479a1.134 1.134 0 0 0 1.148-1.17 1.07 1.07 0 0 0-1.148-1.127z\"/><\/svg><\/div>"}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="mauna-exercise-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>ggplot(mauna, aes(x = month, y = conc)) +
@@ -581,16 +582,16 @@ learnr:::store_exercise_setup_chunk("__setup__", c("library(learnr)", "library(g
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "bar-chart-grammar-1", 
     question = structure("For the <code>data<\u002fcode> component, what is the specification?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_9399f74", 
+    "character")), answers = list(structure(list(id = "lnr_ans_2472cc0", 
         option = "`gapminder`", value = "`gapminder`", label = structure("<code>gapminder<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_392f766", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5435986", 
         option = "`continent`", value = "`continent`", label = structure("<code>continent<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_728c13b", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d9b2df6", 
         option = "`theme_bw()`", value = "`theme_bw()`", label = structure("<code>theme_bw()<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6b9f3f1", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a5b740a", 
         option = "`geom_bar()`", value = "`geom_bar()`", label = structure("<code>geom_bar()<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Submit Answer", html = TRUE, class = c("html", 
@@ -602,23 +603,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
         answer = "bar-chart-grammar-1-answer", question = "bar-chart-grammar-1"), 
     loading = structure("<strong>Loading:<\u002fstrong> \nFor the <code>data<\u002fcode> component, what is the specification?\n<br/><br/><br/>", html = TRUE, class = c("html", 
     "character")), random_answer_order = TRUE, allow_retry = TRUE, 
-    seed = 2074027037.03421, options = list()), class = c("learnr_radio", 
+    seed = 604472688.718521, options = list()), class = c("learnr_radio", 
 "tutorial_question")))
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "bar-chart-grammar-2", 
     question = structure("For the <code>aesthetic<\u002fcode> mapping component, what is the specification?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_1f978ba", 
+    "character")), answers = list(structure(list(id = "lnr_ans_b08ba8b", 
         option = "`gapminder`", value = "`gapminder`", label = structure("<code>gapminder<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4ea3861", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b65eef3", 
         option = "`continent`", value = "`continent`", label = structure("<code>continent<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ce9a7eb", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5a2091b", 
         option = "`theme_bw()`", value = "`theme_bw()`", label = structure("<code>theme_bw()<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7f4f4cc", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_658ca28", 
         option = "`geom_bar()`", value = "`geom_bar()`", label = structure("<code>geom_bar()<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Submit Answer", html = TRUE, class = c("html", 
@@ -630,23 +631,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
         answer = "bar-chart-grammar-2-answer", question = "bar-chart-grammar-2"), 
     loading = structure("<strong>Loading:<\u002fstrong> \nFor the <code>aesthetic<\u002fcode> mapping component, what is the specification?\n<br/><br/><br/>", html = TRUE, class = c("html", 
     "character")), random_answer_order = TRUE, allow_retry = TRUE, 
-    seed = 886424459.087226, options = list()), class = c("learnr_radio", 
+    seed = 1685070153.21533, options = list()), class = c("learnr_radio", 
 "tutorial_question")))
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "bar-chart-grammar-3", 
     question = structure("For the <code>geometric<\u002fcode> object component, what is the specification?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_7ee7ddb", 
+    "character")), answers = list(structure(list(id = "lnr_ans_beb6de0", 
         option = "`gapminder`", value = "`gapminder`", label = structure("<code>gapminder<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_61dcb88", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_524616", 
         option = "`continent`", value = "`continent`", label = structure("<code>continent<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9649420", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_546104b", 
         option = "`theme_bw()`", value = "`theme_bw()`", label = structure("<code>theme_bw()<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_dce946f", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_28445b7", 
         option = "`geom_bar()`", value = "`geom_bar()`", label = structure("<code>geom_bar()<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Submit Answer", html = TRUE, class = c("html", 
@@ -658,23 +659,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
         answer = "bar-chart-grammar-3-answer", question = "bar-chart-grammar-3"), 
     loading = structure("<strong>Loading:<\u002fstrong> \nFor the <code>geometric<\u002fcode> object component, what is the specification?\n<br/><br/><br/>", html = TRUE, class = c("html", 
     "character")), random_answer_order = TRUE, allow_retry = TRUE, 
-    seed = 287591612.36608, options = list()), class = c("learnr_radio", 
+    seed = 735168948.15766, options = list()), class = c("learnr_radio", 
 "tutorial_question")))
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "bar-chart-grammar-4", 
     question = structure("For the <code>scale<\u002fcode> object component, what is the specification?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_3270192", 
+    "character")), answers = list(structure(list(id = "lnr_ans_6f1de21", 
         option = "`gapminder`", value = "`gapminder`", label = structure("<code>gapminder<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_18c5a9c", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_48bb4", 
         option = "`continent`", value = "`continent`", label = structure("<code>continent<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6455137", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_618758a", 
         option = "`theme_bw()`", value = "`theme_bw()`", label = structure("<code>theme_bw()<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bf643b4", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3c6bdf5", 
         option = "none", value = "none", label = structure("none", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Submit Answer", html = TRUE, class = c("html", 
@@ -686,23 +687,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
         answer = "bar-chart-grammar-4-answer", question = "bar-chart-grammar-4"), 
     loading = structure("<strong>Loading:<\u002fstrong> \nFor the <code>scale<\u002fcode> object component, what is the specification?\n<br/><br/><br/>", html = TRUE, class = c("html", 
     "character")), random_answer_order = TRUE, allow_retry = TRUE, 
-    seed = 921977738.070671, options = list()), class = c("learnr_radio", 
+    seed = 1082063225.49612, options = list()), class = c("learnr_radio", 
 "tutorial_question")))
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "bar-chart-grammar-5", 
     question = structure("For the <code>statistical tranform<\u002fcode> object component, what is the specification?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_1d97bf3", 
+    "character")), answers = list(structure(list(id = "lnr_ans_b2cc499", 
         option = "`gapminder`", value = "`gapminder`", label = structure("<code>gapminder<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_87756be", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2da1294", 
         option = "`continent`", value = "`continent`", label = structure("<code>continent<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6369bf8", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b8f2e4c", 
         option = "`theme_bw()`", value = "`theme_bw()`", label = structure("<code>theme_bw()<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4489b9b", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_cc1b6ed", 
         option = "none", value = "none", label = structure("none", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Submit Answer", html = TRUE, class = c("html", 
@@ -714,23 +715,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
         answer = "bar-chart-grammar-5-answer", question = "bar-chart-grammar-5"), 
     loading = structure("<strong>Loading:<\u002fstrong> \nFor the <code>statistical tranform<\u002fcode> object component, what is the specification?\n<br/><br/><br/>", html = TRUE, class = c("html", 
     "character")), random_answer_order = TRUE, allow_retry = TRUE, 
-    seed = 1132633822.47258, options = list()), class = c("learnr_radio", 
+    seed = 814794752.620582, options = list()), class = c("learnr_radio", 
 "tutorial_question")))
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "bar-chart-grammar-6", 
     question = structure("For the <code>facetting<\u002fcode> object component, what is the specification?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_2550b57", 
+    "character")), answers = list(structure(list(id = "lnr_ans_2d3672d", 
         option = "`gapminder`", value = "`gapminder`", label = structure("<code>gapminder<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e4b557d", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_460051f", 
         option = "`continent`", value = "`continent`", label = structure("<code>continent<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6202a5e", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d10884d", 
         option = "`theme_bw()`", value = "`theme_bw()`", label = structure("<code>theme_bw()<\u002fcode>", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f8808b", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d2f177", 
         option = "none", value = "none", label = structure("none", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Submit Answer", html = TRUE, class = c("html", 
@@ -742,7 +743,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
         answer = "bar-chart-grammar-6-answer", question = "bar-chart-grammar-6"), 
     loading = structure("<strong>Loading:<\u002fstrong> \nFor the <code>facetting<\u002fcode> object component, what is the specification?\n<br/><br/><br/>", html = TRUE, class = c("html", 
     "character")), random_answer_order = TRUE, allow_retry = TRUE, 
-    seed = 1259016244.41372, options = list()), class = c("learnr_radio", 
+    seed = 671764011.687186, options = list()), class = c("learnr_radio", 
 "tutorial_question")))
 </script>
  
@@ -757,9 +758,9 @@ output$`tutorial-exercise-mauna-exercise-output` <- renderUI({
 learnr:::store_exercise_cache("mauna-exercise", list(setup = NULL, chunks = list(list(label = "mauna-exercise", 
     code = "ggplot(FILL_THIS_IN, aes(FILL_THIS_IN, FILL_THIS_IN)) +\n  FILL_THIS_IN()", 
     opts = list(label = "\"mauna-exercise\"", exercise = "TRUE"), 
-    engine = "r")), code_check = NULL, error_check = NULL, check = NULL, 
-    solution = structure(c("ggplot(mauna, aes(x = month, y = conc)) +", 
-    "  geom_line()"), chunk_opts = list(label = "mauna-exercise-solution")), 
+    engine = "r")), code_check = NULL, error_check = NULL, check = structure("grade_code()", chunk_opts = list(
+    label = "mauna-exercise-check")), solution = structure(c("ggplot(mauna, aes(x = month, y = conc)) +", 
+"  geom_line()"), chunk_opts = list(label = "mauna-exercise-solution")), 
     options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, strip.white = TRUE, 
