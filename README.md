@@ -1,4 +1,4 @@
-# teach-r-temp
+# Data Science and Visualization `learnr` material
 
 This repository contains `learnr` material used with Dr. Brenton Wiernik's data science and visualization class in Spring 2020.
 
