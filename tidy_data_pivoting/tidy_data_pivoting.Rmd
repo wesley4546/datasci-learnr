@@ -75,7 +75,7 @@ haireye %>%
   tidyr::uncount(n) %>%
   head()
 ```
-## 
+
 
 ### Untidy Examples
 
@@ -253,7 +253,6 @@ question("Would you say this data is in tidy format?",
 ```{r lotr-exercise-wide, exercise = TRUE}
 lotr_wide <- lotr %>%
   pivot_wider(
-    FILL_THIS_IN = c(-Race, -Words),
     FILL_THIS_IN = Race,
     FILL_THIS_IN = Words
   )
@@ -262,7 +261,6 @@ lotr_wide <- lotr %>%
 ```{r lotr-exercise-wide-solution}
 lotr_wide <- lotr %>%
   pivot_wider(
-    id_cols = c(-Race, -Words),
     names_from = Race,
     values_from = Words
   )
@@ -275,9 +273,8 @@ grade_code()
 3. Re-lengthen the wide LOTR data from Question 2 above.
 
 ```{r, echo = FALSE}
-lotr_wide <- lotr %>%
+lotr_wide <- lotr |>
   pivot_wider(
-    id_cols = c(-Race, -Words),
     names_from = Race,
     values_from = Words
   )
